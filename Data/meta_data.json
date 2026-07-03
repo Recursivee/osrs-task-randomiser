@@ -2,6 +2,11 @@
     "Shop": {
         "Region": 50,
         "Minigame": 25,
-        "Boss": 10
+        "Boss": 10,
+        "Reroll": 15
+    },
+
+    "Currency": {
+        "Gold": 0
     }
 }
