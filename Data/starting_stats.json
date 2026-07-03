@@ -1,0 +1,34 @@
+{
+    "Character": {
+        "combat_level": 3,
+        "total_level": 29
+    },
+
+    "Skills": [
+        {"name": "Attack", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Hitpoints", "level": 10, "experience": 1154, "unlocked": true },
+        {"name": "Mining", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Strength", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Agility", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Smithing", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Defence", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Herblore", "level": 0, "experience": 0, "unlocked": false },
+        {"name": "Fishing", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Ranged", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Thieving", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Cooking", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Prayer", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Crafting", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Firemaking", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Magic", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Fletching", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Woodcutting", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Runecraft", "level": 0, "experience": 0, "unlocked": false },
+        {"name": "Slayer", "level": 0, "experience": 0, "unlocked": false },
+        {"name": "Farming", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Construction", "level": 0, "experience": 0, "unlocked": false },
+        {"name": "Hunting", "level": 0, "experience": 0, "unlocked": true },
+        {"name": "Sailing", "level": 0, "experience": 0, "unlocked": false }
+        
+    ]
+}
