@@ -1,57 +1,57 @@
 {
     "Regions": [
         {
-            "region_name": "Misthalin",
+            "name": "Misthalin",
             "quest_requirements": ["None"], 
             "unlocked": true
         },
         {
-            "region_name": "Asgarnia",
+            "name": "Asgarnia",
             "quest_requirements": ["None"], 
             "unlocked": false
         },
         {
-            "region_name": "Kandarin",
+            "name": "Kandarin",
             "quest_requirements": ["None"], 
             "unlocked": false
         },
         {
-            "region_name": "Wilderness",
+            "name": "Wilderness",
             "quest_requirements": ["None"], 
             "unlocked": false
         },
         {
-            "region_name": "Kharidian Desert",
+            "name": "Kharidian Desert",
             "quest_requirements": ["None"], 
             "unlocked": false
         },
         {
-            "region_name": "Morytania",
+            "name": "Morytania",
             "quest_requirements": ["Priest in Peril"], 
             "unlocked": false
         },
         {
-            "region_name": "Fremennik Province",
+            "name": "Fremennik Province",
             "quest_requirements": ["None"], 
             "unlocked": false
         },
         {
-            "region_name": "Tirannwn",
+            "name": "Tirannwn",
             "quest_requirements": ["Regicide"], 
             "unlocked": false
         },
         {
-            "region_name": "Karamja",
+            "name": "Karamja",
             "quest_requirements": ["None"], 
             "unlocked": false
         },
         {
-            "region_name": "Kourend",
+            "name": "Kourend",
             "quest_requirements": ["None"], 
             "unlocked": false
         },
         {
-            "region_name": "Varlamore",
+            "name": "Varlamore",
             "quest_requirements": ["Children of the Sun"], 
             "unlocked": false
         }
@@ -60,392 +60,392 @@
 
     "Bosses": [
     {
-        "boss_name": "Kalphite Queen",
+        "name": "Kalphite Queen",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 85},
         "region": "Kharidian Desert"
     },
     {
-        "boss_name": "Shellbane Gryphon",
+        "name": "Shellbane Gryphon",
         "category": "Slayer",
         "quest_requirements": ["Troubled Tortugans"],
         "skill_requirements": {"combat": 60, "sailing": 45, "slayer": 51},
         "region": "Kharidian Desert"
     },
     {
-        "boss_name": "The Mimic",
+        "name": "The Mimic",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 95},
         "region": "Kourend"
     },
     {
-        "boss_name": "Yama",
+        "name": "Yama",
         "category": "Boss",
         "quest_requirements": ["A Kingdom Divided"],
         "skill_requirements": {"combat": 85},
         "region": "Kourend"
     },
     {
-        "boss_name": "Maggot King",
+        "name": "Maggot King",
         "category": "Boss",
         "quest_requirements": ["The Blood Moon Rises"],
         "skill_requirements": {"combat": 90},
         "region": "Kharidian Desert"
     },
     {
-        "boss_name": "Royal Titans",
+        "name": "Royal Titans",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 80},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "Doom of Mokhaiotl",
+        "name": "Doom of Mokhaiotl",
         "category": "Boss",
         "quest_requirements": ["The Final Dawn"],
         "skill_requirements": {"combat": 95},
         "region": "Varlamore"
     },
     {
-        "boss_name": "Brutus",
+        "name": "Brutus",
         "category": "Boss",
         "quest_requirements": ["The Ides of Milk"],
         "skill_requirements": {"combat": 20},
         "region": "Misthalin"
     },
     {
-        "boss_name": "Revenant Maledictus",
+        "name": "Revenant Maledictus",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 90},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Sarachnis",
+        "name": "Sarachnis",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 75},
         "region": "Kourend"
     },
     {
-        "boss_name": "Giant Mole",
+        "name": "Giant Mole",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 50},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "Gemstone Crab",
+        "name": "Gemstone Crab",
         "category": "Boss",
         "quest_requirements": ["Children of the Sun"],
         "skill_requirements": {"combat": 10},
         "region": "Varlamore"
     },
     {
-        "boss_name": "Dagannoth Kings",
+        "name": "Dagannoth Kings",
         "category": "Boss",
         "quest_requirements": ["The Fremennik Trials"],
         "skill_requirements": {"combat": 75},
         "region": "Fremennik Province"
     },
     {
-        "boss_name": "Zulrah",
+        "name": "Zulrah",
         "category": "Boss",
         "quest_requirements": ["Regicide"],
         "skill_requirements": {"magic": 75, "ranged": 75, "combat": 85},
         "region": "Tirannwn"
     },
     {
-        "boss_name": "Vorkath",
+        "name": "Vorkath",
         "category": "Boss",
         "quest_requirements": ["Dragon Slayer II"],
         "skill_requirements": {"combat": 90},
         "region": "Fremennik Province"
     },
     {
-        "boss_name": "Grotesque Guardians",
+        "name": "Grotesque Guardians",
         "category": "Slayer",
         "quest_requirements": ["Priest in Peril"],
         "skill_requirements": {"slayer": 75, "combat": 70},
         "region": "Morytania"
     },
     {
-        "boss_name": "Alchemical Hydra",
+        "name": "Alchemical Hydra",
         "category": "Slayer",
         "quest_requirements": ["None"],
         "skill_requirements": {"slayer": 95, "combat": 100},
         "region": "Kandarin"
     },
     {
-        "boss_name": "The Gauntlet",
+        "name": "The Gauntlet",
         "category": "Boss",
         "quest_requirements": ["Song of the Elves"],
         "skill_requirements": {"combat": 90},
         "region": "Tirannwn"
     },
     {
-        "boss_name": "Phantom Muspah",
+        "name": "Phantom Muspah",
         "category": "Boss",
         "quest_requirements": ["Secrets of the North"],
         "skill_requirements": {"magic": 75, "ranged": 75, "combat": 85},
         "region": "Fremennik Province"
     },
     {
-        "boss_name": "Scurrius",
+        "name": "Scurrius",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 40},
         "region": "Misthalin"
     },
     {
-        "boss_name": "Araxxor",
+        "name": "Araxxor",
         "category": "Slayer",
         "quest_requirements": ["Priest in Peril"],
         "skill_requirements": {"slayer": 92, "combat": 100},
         "region": "Morytania"
     },
     {
-        "boss_name": "Commander Zilyana",
+        "name": "Commander Zilyana",
         "category": "Boss",
         "quest_requirements": ["Troll Stronghold"],
         "skill_requirements": {"agility": 70, "combat": 90},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "General Graardor",
+        "name": "General Graardor",
         "category": "Boss",
         "quest_requirements": ["Troll Stronghold"],
         "skill_requirements": {"strength": 70, "combat": 90},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "Kree'arra",
+        "name": "Kree'arra",
         "category": "Boss",
         "quest_requirements": ["Troll Stronghold"],
         "skill_requirements": {"ranged": 70, "combat": 90},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "K'ril Tsutsaroth",
+        "name": "K'ril Tsutsaroth",
         "category": "Boss",
         "quest_requirements": ["Troll Stronghold"],
         "skill_requirements": {"hitpoints": 70, "combat": 90},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "Nex",
+        "name": "Nex",
         "category": "Boss",
         "quest_requirements": ["The Frozen Door"],
         "skill_requirements": {"combat": 105},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "Duke Sucellus",
+        "name": "Duke Sucellus",
         "category": "Boss",
         "quest_requirements": ["Desert Treasure II - The Fallen Empire"],
         "skill_requirements": {"combat": 95},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "The Leviathan",
+        "name": "The Leviathan",
         "category": "Boss",
         "quest_requirements": ["Desert Treasure II - The Fallen Empire"],
         "skill_requirements": {"combat": 95},
         "region": "Kharidian Desert"
     },
     {
-        "boss_name": "The Whisperer",
+        "name": "The Whisperer",
         "category": "Boss",
         "quest_requirements": ["Desert Treasure II - The Fallen Empire"],
         "skill_requirements": {"combat": 95},
         "region": "Morytania"
     },
     {
-        "boss_name": "Vardorvis",
+        "name": "Vardorvis",
         "category": "Boss",
         "quest_requirements": ["Desert Treasure II - The Fallen Empire"],
         "skill_requirements": {"combat": 95},
         "region": "Kourend"
     },
     {
-        "boss_name": "Abyssal Sire",
+        "name": "Abyssal Sire",
         "category": "Slayer",
         "quest_requirements": ["Enter the Abyss"],
         "skill_requirements": {"slayer": 85, "combat": 85},
         "region": "Misthalin"
     },
     {
-        "boss_name": "Cerberus",
+        "name": "Cerberus",
         "category": "Slayer",
         "quest_requirements": ["None"],
         "skill_requirements": {"slayer": 91, "combat": 75},
         "region": "Asgarnia"
     },
     {
-        "boss_name": "Kraken",
+        "name": "Kraken",
         "category": "Slayer",
         "quest_requirements": ["None"],
         "skill_requirements": {"slayer": 87, "combat": 80, "magic": 50},
         "region": "Kandarin"
     },
     {
-        "boss_name": "Thermonuclear Smoke Devil",
+        "name": "Thermonuclear Smoke Devil",
         "category": "Slayer",
         "quest_requirements": ["None"],
         "skill_requirements": {"slayer": 93, "combat": 85},
         "region": "Kandarin"
     },
     {
-        "boss_name": "The Nightmare",
+        "name": "The Nightmare",
         "category": "Boss",
         "quest_requirements": ["Priest in Peril"],
         "skill_requirements": {"combat": 100},
         "region": "Morytania"
     },
     {
-        "boss_name": "Corporeal Beast",
+        "name": "Corporeal Beast",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 100},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Callisto",
+        "name": "Callisto",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 90},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Venenatis",
+        "name": "Venenatis",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 90},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Vet'ion",
+        "name": "Vet'ion",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 85},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Chaos Fanatic",
+        "name": "Chaos Fanatic",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 60},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Crazy Archaeologist",
+        "name": "Crazy Archaeologist",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 50},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Scorpia",
+        "name": "Scorpia",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 75},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Chaos Elemental",
+        "name": "Chaos Elemental",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 70},
         "region": "Wilderness"
     },
     {
-        "boss_name": "King Black Dragon",
+        "name": "King Black Dragon",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 70},
         "region": "Wilderness"
     },
     {
-        "boss_name": "Tormented Demons",
+        "name": "Tormented Demons",
         "category": "Boss",
         "quest_requirements": ["While Guthix Sleeps"],
         "skill_requirements": {"combat": 95},
         "region": "Kandarin"
     },
     {
-        "boss_name": "Skotizo",
+        "name": "Skotizo",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 80},
         "region": "Kourend"
     },
     {
-        "boss_name": "Bryophyta",
+        "name": "Bryophyta",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 45},
         "region": "Misthalin"
     },
     {
-        "boss_name": "Obor",
+        "name": "Obor",
         "category": "Boss",
         "quest_requirements": ["None"],
         "skill_requirements": {"combat": 45},
         "region": "Misthalin"
     },
     {
-        "boss_name": "Deranged Archaeologist",
+        "name": "Deranged Archaeologist",
         "category": "Boss",
         "quest_requirements": ["Bone Voyage"],
         "skill_requirements": {"combat": 60},
         "region": "Fossil Island"
     },
     {
-        "boss_name": "Wintertodt",
+        "name": "Wintertodt",
         "category": "Skilling",
         "quest_requirements": ["None"],
         "skill_requirements": {"firemaking": 50, "combat": 10},
         "region": "Kourend"
     },
     {
-        "boss_name": "Tempoross",
+        "name": "Tempoross",
         "category": "Skilling",
         "quest_requirements": ["None"],
         "skill_requirements": {"fishing": 35},
         "region": "Kharidian Desert"
     },
     {
-        "boss_name": "Zalcano",
+        "name": "Zalcano",
         "category": "Skilling",
         "quest_requirements": ["Song of the Elves"],
         "skill_requirements": {"mining": 70, "smithing": 70, "runecraft": 70},
         "region": "Tirannwn"
     },
     {
-        "boss_name": "Hespori",
+        "name": "Hespori",
         "category": "Skilling",
         "quest_requirements": ["None"],
         "skill_requirements": {"farming": 65, "combat": 70},
         "region": "Kourend"
     },
     {
-        "boss_name": "Amoxliatl",
+        "name": "Amoxliatl",
         "category": "Boss",
         "quest_requirements": ["Children of the Sun"],
         "skill_requirements": {"combat": 55},
         "region": "Varlamore"
     },
     {
-        "boss_name": "Hueycoatl",
+        "name": "Hueycoatl",
         "category": "Boss",
         "quest_requirements": ["Children of the Sun"],
         "skill_requirements": {"prayer": 43, "combat": 85},
         "region": "Varlamore"
     },
     {
-        "boss_name": "Perilous Moons",
+        "name": "Perilous Moons",
         "category": "Boss",
         "quest_requirements": ["Perilous Moons"],
         "skill_requirements": {"combat": 75},
@@ -455,19 +455,19 @@
 
     "Raids": [
         {
-            "raid_name": "Chambers of Xeric",
+            "name": "Chambers of Xeric",
             "region": "Kourend",
             "quest_requirements" : "None",
             "unlocked": false
         },
         {
-            "raid_name": "Theatre of Blood",
+            "name": "Theatre of Blood",
             "region": "Morytania",
             "quest_requirements": "Priest in Peril",
             "unlocked": false
         },
         {
-            "raid_name": "Tombs of Amascut",
+            "name": "Tombs of Amascut",
             "region": "Kharidian Desert",
             "quest_requirements": "Beneath Cursed Sands",
             "unlocked": false
@@ -476,217 +476,217 @@
 
     "Minigames": [
         {
-            "minigame_name": "Barbarian Assault",
+            "name": "Barbarian Assault",
             "region" : "Fremennik Province",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Emir's Arena",
+            "name": "Emir's Arena",
             "region" : "Kharidian Desert",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Fortis Colosseum",
+            "name": "Fortis Colosseum",
             "region" : "Varlamore",
             "quest_requirements": "Children of the Sun",
             "unlocked" : false
         },
         {
-            "minigame_name": "Inferno",
+            "name": "Inferno",
             "region" : "Karamja",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Nightmare Zone",
+            "name": "Nightmare Zone",
             "region" : "Asgarnia",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Pest Control",
+            "name": "Pest Control",
             "region" : "Karamja",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Soul Wars",
+            "name": "Soul Wars",
             "region" : "Asgarnia",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Temple Trekking",
+            "name": "Temple Trekking",
             "region" : "Morytania",
             "quest_requirements": "In Aid of the Myreque",
             "unlocked" : false
         },
         {
-            "minigame_name": "TzHaar Fight Pit",
+            "name": "TzHaar Fight Pit",
             "region" : "Karamja",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Blast Furnace",
+            "name": "Blast Furnace",
             "region" : "Misthalin",
             "quest_requirements": "The Giant Dwarf",
             "unlocked" : false
         },
         {
-            "minigame_name": "Brimhaven Agility Arena",
+            "name": "Brimhaven Agility Arena",
             "region" : "Karamja",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Fishing Trawler",
+            "name": "Fishing Trawler",
             "region" : "Asgarnia",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Giants' Foundry",
+            "name": "Giants' Foundry",
             "region" : "Kharidian Desert",
             "quest_requirements": "Sleeping Giants",
             "unlocked" : false
         },
         {
-            "minigame_name": "Guardians of the Rift",
+            "name": "Guardians of the Rift",
             "region" : "Misthalin",
             "quest_requirements": "Temple of the Eye",
             "unlocked" : false
         },
         {
-            "minigame_name": "Hollowed Sepulchre",
+            "name": "Hollowed Sepulchre",
             "region" : "Morytania",
             "quest_requirements": "Sins of the Father",
             "unlocked" : false
         },
         {
-            "minigame_name": "Impetuous Impulses",
+            "name": "Impetuous Impulses",
             "region" : "Misthalin",
             "quest_requirements": "Lost City",
             "unlocked" : false
         },
         {
-            "minigame_name": "Mage Training Arena",
+            "name": "Mage Training Arena",
             "region" : "Kharidian Desert",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Mahogany Homes",
+            "name": "Mahogany Homes",
             "region" : "Asgarnia",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Mastering Mixology",
+            "name": "Mastering Mixology",
             "region" : "Varlamore",
             "quest_requirements": "Children of the Sun",
             "unlocked" : false
         },
         {
-            "minigame_name": "Pyramid Plunder",
+            "name": "Pyramid Plunder",
             "region" : "Kharidian Desert",
             "quest_requirements": "Icthlarin's Little Helper",
             "unlocked" : false
         },
         {
-            "minigame_name": "Rogue's Den",
+            "name": "Rogue's Den",
             "region" : "Asgarnia",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Sorceress's Garden",
+            "name": "Sorceress's Garden",
             "region" : "Kharidian Desert",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Stealing Artefacts",
+            "name": "Stealing Artefacts",
             "region" : "Kourend",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Tithe Farm",
+            "name": "Tithe Farm",
             "region" : "Kourend",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Trouble Brewing",
+            "name": "Trouble Brewing",
             "region" : "Kharidian Desert",
             "quest_requirements": "Cabin Fever",
             "unlocked" : false
         },
         {
-            "minigame_name": "Vale Totems",
+            "name": "Vale Totems",
             "region" : "Varlamore",
             "quest_requirements": "Children of the Sun",
             "unlocked" : false
         },
         {
-            "minigame_name": "Volcanic Mine",
+            "name": "Volcanic Mine",
             "region" : "Misthalin",
             "quest_requirements": "Bone Voyage",
             "unlocked" : false
         },
         {
-            "minigame_name": "Shades of Mort'ton",
+            "name": "Shades of Mort'ton",
             "region" : "Morytania",
             "quest_requirements": "Shades of Mort'ton",
             "unlocked" : false
         },
         {
-            "minigame_name": "Tai Bwo Wannai Cleanup",
+            "name": "Tai Bwo Wannai Cleanup",
             "region" : "Karamja",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Barbarian Assault",
+            "name": "Barbarian Assault",
             "region" : "Fremennik Province",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "The Gauntlet",
+            "name": "The Gauntlet",
             "region" : "Tirannwn",
             "quest_requirements": "Song of the Elves",
             "unlocked" : false
         },
         {
-            "minigame_name": "Warrior's Guild",
+            "name": "Warrior's Guild",
             "region" : "Asgarnia",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Forestry",
+            "name": "Forestry",
             "region" : "Misthalin",
             "quest_requirements": "None",
             "unlocked" : false
         },
         {
-            "minigame_name": "Tears of Guthix",
+            "name": "Tears of Guthix",
             "region" : "Misthalin",
             "quest_requirements": "Tears of Guthix",
             "unlocked" : false
         },
         {
-            "minigame_name": "Barrows Brothers",
+            "name": "Barrows Brothers",
             "region" : "Morytania",
             "quest_requirements": "Priest in Peril",
             "unlocked" : false
         },
         {
-            "minigame_name": "Moons of Peril",
+            "name": "Moons of Peril",
             "region" : "Varlamore",
             "quest_requirements": "Perilous Moons",
             "unlocked" : false
