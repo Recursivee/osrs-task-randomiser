@@ -1,0 +1,28 @@
+{
+    "series_mappings": {
+        "Elf": "Tirannwn",
+        "Myreque": "Morytania",
+        "Desert": "Kharidian Desert",
+        "Fremennik": "Fremennik Province",
+        "Kourend & Kebos": "Kourend",
+        "Mahjarrat": "Kharidian Desert"
+    },
+
+    "keyword_mappings": {
+        "Misthalin": ["Varrock", "Lumbridge", "Draynor", "Edgeville", "Barbarian Village", "Digsite", "Champions' Guild", "Paterdomus Temple", "Dorgesh-Kaan", "Exam Centre", "Jolly Boar Inn", "Wizards' Tower", "White Wolf Mountain", "Tutorial", "Lumbridge", "Pandemonium", "Release each member of the council from the Culinaromancer's spell"],
+        "Asgarnia": ["Falador", "Burthorpe", "Taverley", "Port Sarim", "Rimmington", "Squire", "Entrana", "Ice Mountain", "Goblin Village"],
+        "Kandarin": ["Ardougne", "Catherby", "Yanille", "Seers", "Hemsworth", "Tree Gnome", "Grand Tree", "Baxtorian Falls", "Feldip Hills", "Jiggig", "Barbarian Outpost", "Camelot", "Witchaven", "Castle Wars", "Fishing Guild", "Legends' Guild", "Observatory", "Ranging Guild", "Sinclair Mansion", "Myths' Guild"],
+        "Wilderness": ["Edgeville Dungeon", "Wilderness", "King Black Dragon"],
+        "Kharidian Desert": ["Bedabin Camp", "Desert Quarry", "Sophanem", "Nardah", "Pollnivneach", "Uzer", "Menaphos", "Al Kharid", "Agility Pyramid", "Remote Island", "Great Conch"],
+        "Morytania": ["Canifis", "Burgh de Rott", "Mort'ton", "Port Phasmatys", "Slayer Tower", "Fenkenstrain", "Morytania", "Mos Le'Harmless", "Meiyerditch", "Theatre of Blood", "Slepe", "Icyene Graveyard"],
+        "Fremennik Province": ["Keldagrim", "Lunar Isle", "Rellekka", "Troll Stronghold", "Miscellania"],
+        "Tirannwn": ["Isafdar", "Lletya"],
+        "Karamja": ["Brimhaven", "Shilo", "TzHaar", "Musa Point", "Tai Bwo Wannai"],
+        "Kourend": ["Port Piscarilius", "Hosidius", "Lovakengj", "Arceuus", "Shayzien", "Kourend", "Farming Guild", "Kebos"],
+        "Varlamore": ["Civitas", "Aldarin", "Fortis", "Sun", "Hunter Guild", "Cam Torum", "Auburn", "Ralos' Rise", "Twilight Temple", "Villa Lucens", "Teomat", "Locus Oasis", "Tal Teklan"]
+    },
+
+    "exclusions": [
+        "Quests", "Quest difficulties", "Quest experience rewards", "Quest point hood", "Quest items/Need for quest", "Quest items/Originating quest", "Quest items/Achievement diary", "Quest experience rewards (F2P)", "Optimal quest guide", "Recipe for Disaster/Full guide"
+    ]
+}

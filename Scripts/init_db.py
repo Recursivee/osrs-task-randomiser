@@ -16,7 +16,7 @@ def initialise_database(database_location, schema_location):
             print(f"Created at: {schema_location}")
     except sqlite3.Error as e:
         print(f"An error occurred during initialisation: {e}")
-    
+    return conn
 
 
 if __name__ == "__main__":

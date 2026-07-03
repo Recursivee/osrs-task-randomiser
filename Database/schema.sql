@@ -4,16 +4,27 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS player_stats (
     skill_name TEXT PRIMARY KEY,
     current_level INTEGER DEFAULT 1,
-    current_xp INTEGER DEFAULT 0
+    current_xp INTEGER DEFAULT 0,
+    is_unlocked BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE IF NOT EXISTS metadata (
     id INTEGER PRIMARY KEY CHECK (id = 1), -- Guarantees only one row exists
     total_quest_points INTEGER DEFAULT 0,
-    keys_available INTEGER DEFAULT 0
+    gold_available INTEGER DEFAULT 0
 );
 
--- 2. THE UNLOCK SHOP (Consolidated Regions, Bosses, Raids, Minigames)
+-- 2. QUESTS MASTER DATA
+CREATE TABLE IF NOT EXISTS quests (
+    quest_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    quest_name TEXT UNIQUE NOT NULL,
+    difficulty TEXT,
+    quest_point_reward INTEGER DEFAULT 0,
+    region TEXT, -- starting location for region calculation
+    status INTEGER DEFAULT 0 -- 0 = Locked, 1 = In Progress, 2 = Completed
+);
+
+-- 3. THE UNLOCK SHOP (Consolidated Regions, Bosses, Raids, Minigames)
 CREATE TABLE IF NOT EXISTS unlockable_shop (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE NOT NULL,
@@ -22,14 +33,6 @@ CREATE TABLE IF NOT EXISTS unlockable_shop (
     parent_quest_id INTEGER, -- Optional quest needed to access it
     is_unlocked BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (parent_quest_id) REFERENCES quests(quest_id)
-);
-
--- 3. QUESTS MASTER DATA
-CREATE TABLE IF NOT EXISTS quests (
-    quest_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    quest_name TEXT UNIQUE NOT NULL,
-    quest_point_reward INTEGER DEFAULT 0,
-    status INTEGER DEFAULT 0 -- 0 = Locked, 1 = In Progress, 2 = Completed
 );
 
 -- 4. LEVEL & QUEST PREREQUISITES (Universal for Quests or Shop Items)
@@ -49,17 +52,17 @@ CREATE TABLE IF NOT EXISTS quest_requirements (
     FOREIGN KEY (required_quest_id) REFERENCES quests(quest_id)
 );
 
--- 5. THE CRUCIAL MISSING PIECE: THE MASTER TASK POOL
+-- 5. THE MASTER TASK POOL (For storing generated task options or templates)
 CREATE TABLE IF NOT EXISTS tasks_master (
     task_id INTEGER PRIMARY KEY AUTOINCREMENT,
     task_description TEXT NOT NULL,
     task_type TEXT NOT NULL, -- 'ACTIVE' or 'AFK'
-    difficulty_tier TEXT NOT NULL, -- 'EASY', 'MEDIUM', 'HARD', 'ELITE'
+    difficulty_tier TEXT NOT NULL, -- 'EASY', 'MEDIUM', 'HARD'
     associated_shop_id INTEGER, -- The region/boss unlock required to roll this
     FOREIGN KEY (associated_shop_id) REFERENCES unlockable_shop(id)
 );
 
--- 6. ACTIVE SLOTS TRACKER (Handles your current state and the 3 choices)
+-- 6. ACTIVE SLOTS TRACKER (Handles current state and the 3 choices)
 CREATE TABLE IF NOT EXISTS active_slots (
     slot_type TEXT PRIMARY KEY, -- 'ACTIVE' or 'AFK'
     current_task_id INTEGER,    -- The task currently being worked on
