@@ -2,6 +2,7 @@
     "Character": {
         "combat": 3,
         "total": 29,
+        "quest_points": 1,
         "warriors_guild_total": 2
     },
 
