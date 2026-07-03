@@ -1,9 +1,72 @@
 {
     "Task_Weighting": {
-        "Skill": 0.25,
-        "Quest": 0.25,
-        "Boss": 0.2,
-        "Minigame": 0.2,
-        "Raid": 0.1
-    }
+        "Skill": 0.30,
+        "Quest": 0.30,
+        "Boss": 0.10,
+        "Minigame": 0.10,
+        "Raid": 0.05,
+        "Slayer": 0.15
+    },
+    
+    "Tasks": [
+        {
+            "template_id": 1,
+            "category": "Skill",
+            "task_type": null,
+            "description_template": "Reach level {amount} in {skill}",
+            "difficulty_tier": "Easy",
+            "min_amount": 1,
+            "max_amount": 3
+        },
+        {
+            "template_id": 2,
+            "category": "Skill",
+            "task_type": null,
+            "description_template": "Reach level {amount} in {skill}",
+            "difficulty_tier": "Medium",
+            "min_amount": 5,
+            "max_amount": 10
+        },
+        {
+            "template_id": 3,
+            "category": "Quest",
+            "task_type": "Active",
+            "description_template": "Complete the quest: {content_name}",
+            "difficulty_tier": "Dynamic"
+        },    
+        {
+            "template_id": 4,
+            "category": "Boss",
+            "task_type": null,
+            "description_template": "Kill {content_name} {amount} times",
+            "difficulty_tier": "Medium",
+            "min_amount": 5,
+            "max_amount": 15
+        },
+        {
+            "template_id": 5,
+            "category": "Minigame",
+            "task_type": "Active",
+            "description_template": "Complete {amount} rounds of {content_name}",
+            "difficulty_tier": "Easy",
+            "min_amount": 5,
+            "max_amount": 15
+        },
+        {
+            "template_id": 6,
+            "category": "Raid",
+            "task_type": "Active",
+            "description_template": "Reach level {amount} in {skill}",
+            "difficulty_tier": "Hard"
+        },
+        {
+            "template_id": 7,
+            "category": "Slayer",
+            "task_type": "Active",
+            "description_template": "Complete {amount} of Slayer assignments",
+            "difficulty_tier": "Medium",
+            "min_amount": 1,
+            "max_amount": 5
+        }
+    ]
 }
