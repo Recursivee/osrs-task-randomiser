@@ -1,0 +1,20 @@
+{
+    "Shop": [
+        {
+            "content": "Region",
+            "price": 50
+        },
+        {
+            "content": "Boss",
+            "price": 10
+        },
+        {
+            "content": "Minigame",
+            "price": 25
+        },
+        {
+            "content": "Raid",
+            "price": 50
+        }
+    ]
+}

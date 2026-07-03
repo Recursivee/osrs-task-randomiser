@@ -1,0 +1,24 @@
+{
+    "Tasks": [
+        {
+            "name": "Skill",
+            "weighting": 0.25
+        },
+        {
+            "name": "Quest",
+            "weighting": 0.25
+        },
+        {
+            "name": "Boss",
+            "weighting": 0.2
+        },
+        {
+            "name": "Minigame",
+            "weighting": 0.2
+        },
+        {
+            "name": "Raid",
+            "weighting": 0.1
+        }
+    ]
+}
