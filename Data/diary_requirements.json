@@ -1,0 +1,1086 @@
+{
+  "Ardougne": {
+    "Easy": {
+      "skills": {
+        "Thieving": 5
+      },
+      "quests": ["Biohazard", "Rune Mysteries"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Strength": 38,
+        "Agility": 39,
+        "Ranged": 25,
+        "Thieving": 38,
+        "Crafting": 49,
+        "Firemaking": 50,
+        "Magic": 51,
+        "Woodcutting": 36,
+        "Farming": 31,
+        "Construction": 10,
+        "Smithing": 59,
+        "Fletching": 59,
+        "quest_points": 20
+      },
+      "quests": ["Enlightened Journey", "The Hand in the Sand", "Rune Mysteries", "Tower of Life", "Underground Pass", "Fairytale I - Growing Pains", "Sea Slug", "Watchtower"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Mining": 52,
+        "Strength": 50,
+        "Agility": 56,
+        "Smithing": 68,
+        "Herblore": 45,
+        "Fishing": 53,
+        "Ranged": 60,
+        "Thieving": 72,
+        "Cooking": 53,
+        "Prayer": 42,
+        "Crafting": 72,
+        "Firemaking": 50,
+        "Magic": 68,
+        "Fletching": 59,
+        "Woodcutting": 50,
+        "Runecraft": 65,
+        "Farming": 70,
+        "Construction": 50,
+        "Hunter": 59,
+        "quest_points": 107
+      },
+      "quests": ["Enlightened Journey", "The Hand in the Sand", "Legends' Quest", "Monkey Madness I", "Mourning's End Part II", "Rune Mysteries", "Tower of Life", "Watchtower", "Fairytale I - Growing Pains", "Sea Slug"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Mining": 52,
+        "Strength": 50,
+        "Agility": 90,
+        "Smithing": 91,
+        "Herblore": 45,
+        "Fishing": 81,
+        "Ranged": 60,
+        "Thieving": 82,
+        "Cooking": 91,
+        "Prayer": 42,
+        "Crafting": 50,
+        "Firemaking": 50,
+        "Magic": 94,
+        "Fletching": 69,
+        "Woodcutting": 50,
+        "Runecraft": 65,
+        "Farming": 85,
+        "Construction": 50,
+        "Hunter": 59,
+        "quest_points": 107
+      },
+      "quests": ["Desert Treasure I", "Enlightened Journey", "The Hand in the Sand", "Haunted Mine", "Legends' Quest", "Monkey Madness I", "Mournings End Part II", "Rune Mysteries", "Tower of Life", "Watchtower", "Fairytale I - Growing Pains", "Sea Slug"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    }
+  },
+  "Desert": {
+    "Easy": {
+      "skills": {
+        "Thieving": 21,
+        "Hunter": 5
+      },
+      "quests": ["Icthlarin's Little Helper"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 37,
+        "Agility": 30,
+        "Herblore": 36,
+        "Ranged": 37,
+        "Thieving": 37,
+        "Prayer": 43,
+        "Crafting": 50,
+        "Firemaking": 45,
+        "Magic": 39,
+        "Woodcutting": 35,
+        "Slayer": 22,
+        "Construction": 20,
+        "Hunter": 47
+      },
+      "quests": ["Eagles' Peak", "Enakhra's Lament", "The Golem", "Spirits of the Elid", "Icthlarin's Little Helper"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Attack": 50,
+        "Mining": 60,
+        "Agility": 70,
+        "Smithing": 68,
+        "Defence": 40,
+        "Herblore": 36,
+        "Ranged": 40,
+        "Thieving": 65,
+        "Prayer": 43,
+        "Crafting": 61,
+        "Firemaking": 60,
+        "Magic": 68,
+        "Fletching": 10,
+        "Woodcutting": 55,
+        "Slayer": 65,
+        "Construction": 20,
+        "Hunter": 47,
+        "combat": 85
+      },
+      "quests": ["Contact!", "Desert Treasure I", "Dream Mentor", "Eagles' Peak", "Enakhra's Lament", "The Feud", "The Golem", "Spirits of the Elid"],
+      "bosses": ["Kalphite Queen"],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Attack": 50,
+        "Mining": 60,
+        "Agility": 70,
+        "Smithing": 68,
+        "Defence": 40,
+        "Herblore": 36,
+        "Ranged": 40,
+        "Thieving": 91,
+        "Cooking": 85,
+        "Prayer": 85,
+        "Crafting": 61,
+        "Firemaking": 60,
+        "Magic": 94,
+        "Fletching": 95,
+        "Woodcutting": 55,
+        "Slayer": 65,
+        "Construction": 78,
+        "Hunter": 47,
+        "combat": 85
+      },
+      "quests": ["Contact!", "Desert Treasure I", "Dream Mentor", "Eagles' Peak", "Enakhra's Lament", "The Feud", "The Golem", "Spirits of the Elid"],
+      "bosses": ["Kalphite Queen"],
+      "minigames": ["Pyramid Plunder"],
+      "other": []
+    }
+  },
+  "Falador": {
+    "Easy": {
+      "skills": {
+        "Mining": 10,
+        "Agility": 5,
+        "Smithing": 13,
+        "Construction": 16
+      },
+      "quests": ["Doric's Quest", "The Knight's Sword"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 40,
+        "Strength": 37,
+        "Agility": 42,
+        "Smithing": 59,
+        "Defence": 20,
+        "Ranged": 19,
+        "Thieving": 40,
+        "Cooking": 20,
+        "Prayer": 10,
+        "Crafting": 40,
+        "Firemaking": 49,
+        "Magic": 37,
+        "Fletching": 59,
+        "Farming": 47,
+        "Woodcutting": 30,
+        "Slayer": 32,
+        "Construction": 16,
+        "quest_points": 12
+      },
+      "quests": ["Recruitment Drive", "Doric's Quest", "The Knight's Sword", "Skippy and the Mogres"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+            "warriors_guild_total": 130,
+            "Mining": 60,
+            "Strength": 37,
+            "Agility": 59,
+            "Smithing": 59,
+            "Defence": 50,
+            "Herblore": 52,
+            "Fishing": 53,
+            "Ranged": 19,
+            "Thieving": 58,
+            "Cooking": 53,
+            "Prayer": 70,
+            "Crafting": 40,
+            "Firemaking": 49,
+            "Magic": 37,
+            "Fletching": 59,
+            "Woodcutting": 71,
+            "Runecraft": 56,
+            "Slayer": 72,
+            "Farming": 47,
+            "Construction": 16,
+            "quest_points": 55 
+      },
+      "quests": ["Ratcatchers", "Doric's Quest", "The Knight's Sword", "Skippy and the Mogres", "Grim Tales", "Heroes' Quest", "The Slug Menace"],
+      "bosses": ["Giant Mole"],
+      "minigames": ["Motherlode Mine"],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "warriors_guild_total": 130,
+        "Mining": 60,
+        "Strength": 37,
+        "Agility": 80,
+        "Smithing": 59,
+        "Defence": 50,
+        "Herblore": 81,
+        "Fishing": 53,
+        "Ranged": 19,
+        "Thieving": 58,
+        "Cooking": 53,
+        "Prayer": 70,
+        "Crafting": 40,
+        "Firemaking": 49,
+        "Magic": 37,
+        "Fletching": 59,
+        "Woodcutting": 75,
+        "Runecraft": 88,
+        "Slayer": 72,
+        "Farming": 91,
+        "Construction": 16,
+        "quest_points": 55
+      },
+      "quests": ["Recruitment Drive", "Doric's Quest", "The Knight's Sword", "Skippy and the Mogres", "Grim Tales", "Heroes' Quest", "The Slug Menace"],
+      "bosses": ["Giant Mole"],
+      "minigames": ["Motherlode Mine"],
+      "other": ["any_level_99_skill"]
+    }
+  },
+  "Fremennik": {
+    "Easy": {
+      "skills": {
+        "Mining": 20,
+        "Smithing": 20,
+        "Thieving": 5,
+        "Crafting": 23,
+        "Firemaking": 15,
+        "Woodcutting": 15,
+        "Hunter": 11
+      },
+      "quests": ["The Fremennik Trials", "The Giant Dwarf", "Troll Stronghold"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 40,
+        "Agility": 35,
+        "Smithing": 50,
+        "Defence": 30,
+        "Thieving": 42,
+        "Crafting": 31,
+        "Firemaking": 40,
+        "Woodcutting": 50,
+        "Slayer": 47,
+        "Construction": 37,
+        "Hunter": 35
+      },
+      "quests": ["Eagles' Peak", "Olaf's Quest", "Between a Rock...", "Horror from the Deep", "Fairytale I - Growing Pains", "The Giant Dwarf", "Troll Stronghold"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Mining": 70,
+        "Agility": 35,
+        "Smithing": 60,
+        "Defence": 40,
+        "Herblore": 66,
+        "Fishing": 53,
+        "Thieving": 75,
+        "Cooking": 53,
+        "Crafting": 61,
+        "Firemaking": 49,
+        "Magic": 72,
+        "Woodcutting": 56,
+        "Slayer": 47,
+        "Construction": 37,
+        "Hunter": 55,
+        "quest_points": 55
+      },
+      "quests": ["Lunar Diplomacy", "The Fremennik Isles", "Throne of Miscellania", "Between a Rock...", "Eadgar's Ruse", "Eagles' Peak", "Horror from the Deep", "Fairytale I - Growing Pains", "The Giant Dwarf", "Olaf's Quest"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+            "Hitpoints": 70,
+            "Mining": 70,
+            "Strength": 70,
+            "Agility": 80,
+            "Smithing": 60,
+            "Defence": 40,
+            "Herblore": 66,
+            "Fishing": 53,
+            "Ranged": 70,
+            "Thieving": 75,
+            "Cooking": 53,
+            "Crafting": 80,
+            "Firemaking": 49,
+            "Magic": 72,
+            "Woodcutting": 56,
+            "Runecraft": 82,
+            "Slayer": 83,
+            "Construction": 37,
+            "Hunter": 55,
+            "quest_points": 55
+      },
+      "quests": ["Lunar Diplomacy", "The Fremennik Isles", "Throne of Miscellania", "Between a Rock...", "Eadgar's Ruse", "Eagles' Peak", "Horror from the Deep", "Fairytale I - Growing Pains", "The Giant Dwarf", "Olaf's Quest"],
+      "bosses": ["Dagannoth Kings", "Kree'arra", "General Graardor", "Commander Zilyana", "K'ril Tsutsaroth", "Nex"],
+      "minigames": [],
+      "other": []
+    }
+  },
+  "Kandarin": {
+    "Easy": {
+      "skills": {
+            "Agility": 20,
+            "Fishing": 16,
+            "Crafting": 42
+      },
+      "quests": ["Elemental Workshop I"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+            "Mining": 30,
+            "Strength": 22,
+            "Agility": 36,
+            "Smithing": 59,
+            "Herblore": 48,
+            "Fishing": 46,
+            "Ranged": 40,
+            "Thieving": 47,
+            "Cooking": 43,
+            "Crafting": 42,
+            "Magic": 45,
+            "Fletching": 59,
+            "Woodcutting": 36,
+            "Farming": 26 
+      },
+      "quests": ["Elemental Workshop II", "Alfred Grimhand's Barcrawl", "Waterfall Quest", "Fairytale I - Growing Pains"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Attack": 20,
+        "Mining": 30,
+        "Strength": 50,
+        "Agility": 60,
+        "Smithing": 75,
+        "Defence": 70,
+        "Herblore": 48,
+        "Fishing": 70,
+        "Ranged": 40,
+        "Thieving": 53,
+        "Cooking": 43,
+        "Prayer": 70,
+        "Crafting": 42,
+        "Firemaking": 65,
+        "Magic": 56,
+        "Fletching": 70,
+        "Woodcutting": 60,
+        "Farming": 26,
+        "Construction": 50,
+        "quest_points": 12
+      },
+      "quests": ["Desert Treasure I", "Alfred Grimhand's Barcrawl", "Fairytale I - Growing Pains", "Elemental Workshop II"],
+      "bosses": [],
+      "minigames": ["Barbarian Assault"],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Attack": 20,
+        "Mining": 60,
+        "Strength": 50,
+        "Agility": 60,
+        "Smithing": 90,
+        "Defence": 70,
+        "Herblore": 86,
+        "Fishing": 76,
+        "Ranged": 40,
+        "Thieving": 53,
+        "Cooking": 80,
+        "Prayer": 70,
+        "Crafting": 85,
+        "Firemaking": 85,
+        "Magic": 87,
+        "Fletching": 70,
+        "Woodcutting": 60,
+        "Farming": 79,
+        "Construction": 50,
+        "quest_points": 12
+      },
+      "quests": ["Alfred Grimhand's Barcrawl", "Family Crest", "Lunar Diplomacy", "Desert Treasure I", "Fairytale I - Growing Pains", "Elemental Workshop II"],
+      "bosses": [],
+      "minigames": ["Barbarian Assault"],
+      "other": []
+    }
+  },
+  "Karamja": {
+    "Easy": {
+      "skills": {
+        "Mining": 40,
+        "Agility": 15
+      },
+      "quests": [],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 40,
+        "Agility": 32,
+        "Herblore": 3,
+        "Fishing": 65,
+        "Cooking": 16,
+        "Crafting": 20,
+        "Woodcutting": 50,
+        "Farming": 27,
+        "Hunter": 41,
+        "quest_points": 32
+      },
+      "quests": ["Dragon Slayer I", "The Grand Tree", "Shilo Village", "Tai Bwo Wannai Trio"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+            "Mining": 52,
+            "Strength": 50,
+            "Agility": 53,
+            "Smithing": 59,
+            "Herblore": 25,
+            "Fishing": 65,
+            "Ranged": 42,
+            "Thieving": 50,
+            "Cooking": 53,
+            "Crafting": 50,
+            "Magic": 59,
+            "Fletching": 59,
+            "Woodcutting": 50,
+            "Runecraft": 44,
+            "Slayer": 50,
+            "Farming": 27,
+            "Hunter": 41,
+            "combat": 100,
+            "quest_points": 107
+      },
+      "quests": ["Legends' Quest", "Tai Bwo Wannai Trio", "The Grand Tree"],
+      "bosses": [],
+      "minigames": ["TzHaar Fight Pit"],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Mining": 52,
+        "Strength": 50,
+        "Agility": 53,
+        "Smithing": 59,
+        "Herblore": 87,
+        "Fishing": 65,
+        "Ranged": 42,
+        "Thieving": 50,
+        "Cooking": 53,
+        "Crafting": 50,
+        "Magic": 59,
+        "Fletching": 59,
+        "Woodcutting": 50,
+        "Runecraft": 91,
+        "Slayer": 50,
+        "Farming": 72,
+        "Hunter": 41,
+        "combat": 100,
+        "quest_points": 107
+      },
+      "quests": ["Legends' Quest", "Tai Bwo Wannai Trio", "The Grand Tree"],
+      "bosses": [],
+      "minigames": ["TzHaar Fight Pit"],
+      "other": []
+    }
+  },
+  "Kourend & Kebos": {
+    "Easy": {
+      "skills": {
+        "Mining": 15,
+        "Herblore": 12,
+        "Fishing": 20,
+        "Thieving": 25,
+        "Construction": 25
+      },
+      "quests": ["Druidic Ritual"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 42,
+        "Strength": 16,
+        "Agility": 49,
+        "Herblore": 12,
+        "Fishing": 43,
+        "Thieving": 25,
+        "Crafting": 31,
+        "Firemaking": 50,
+        "Woodcutting": 50,
+        "Farming": 45,
+        "Construction": 30,
+        "Hunter": 53
+      },
+      "quests": ["The Ascent of Arceuus", "Tale of the Righteous", "The Depths of Despair", "The Forsaken Tower", "The Queen of Thieves", "Fairytale I - Growing Pains", "Eagle's Peak"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+            "Mining": 65,
+            "Strength": 16,
+            "Agility": 49,
+            "Smithing": 70,
+            "Defence": 40,
+            "Herblore": 31,
+            "Fishing": 43,
+            "Thieving": 49,
+            "Crafting": 61,
+            "Firemaking": 50,
+            "Magic": 66,
+            "Fletching": 25,
+            "Woodcutting": 60,
+            "Slayer": 62,
+            "Farming": 74,
+            "Construction": 30,
+            "Hunter": 53,
+            "combat": 85
+      },
+      "quests": ["The Ascent of Arceuus", "The Depths of Despair", "Dream Mentor", "The Forsaken Tower", "The Queen of Thieves", "Tale of the RIghteous", "Fairytale I - Growing Pains", "Eagles' Peak"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Mining": 65,
+        "Strength": 16,
+        "Agility": 49,
+        "Smithing": 70,
+        "Defence": 40,
+        "Herblore": 31,
+        "Fishing": 82,
+        "Thieving": 49,
+        "Cooking": 84,
+        "Crafting": 61,
+        "Firemaking": 50,
+        "Magic": 90,
+        "Fletching": 40,
+        "Woodcutting": 90,
+        "Runecraft": 77,
+        "Slayer": 95,
+        "Farming": 85,
+        "Construction": 30,
+        "Hunter": 53,
+        "combat": 85
+      },
+      "quests": ["The Ascent of Arceuus", "The Depths of Despair", "Dream Mentor", "The Forsaken Tower", "The Queen of Thieves", "Tale of the RIghteous", "Fairytale I - Growing Pains", "Eagles' Peak"],
+      "bosses": ["Skotizo"],
+      "minigames": [],
+      "other": []
+    }
+  },
+  "Lumbridge & Draynor": {
+    "Easy": {
+      "skills": {
+        "Mining": 15,
+        "Fishing": 15,
+        "Firemaking": 15,
+        "Woodcutting": 15,
+        "Runecraft": 5,
+        "Slayer": 7
+      },
+      "quests": ["Cook's Assistant", "Rune Mysteries"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 15,
+        "Strength": 19,
+        "Agility": 20,
+        "Smithing": 59,
+        "Fishing": 30,
+        "Ranged": 50,
+        "Thieving": 38,
+        "Prayer": 31,
+        "Crafting": 38,
+        "Firemaking": 15,
+        "Magic": 31,
+        "Fletching": 59,
+        "Woodcutting": 36,
+        "Runecraft": 23,
+        "Slayer": 18,
+        "Hunter": 42,
+        "combat": 70
+      },
+      "quests": ["Animal Magnetism", "Cook's Assistant", "Rune Mysteries", "Fairytale I - Growing Pains"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Mining": 50,
+        "Strength": 19,
+        "Agility": 46,
+        "Smithing": 59,
+        "Herblore": 25,
+        "Fishing": 53,
+        "Ranged": 50,
+        "Thieving": 53,
+        "Cooking": 70,
+        "Prayer": 52,
+        "Crafting": 70,
+        "Firemaking": 65,
+        "Magic": 60,
+        "Fletching": 59,
+        "Woodcutting": 57,
+        "Runecraft": 59,
+        "Slayer": 18,
+        "Farming": 63,
+        "Hunter": 42,
+        "combat": 70,
+        "quest_points": 175
+      },
+      "quests": ["Animal Magnetism", "Another Slice of H.A.M.", "Recipe for Disaster", "Rune Mysteries", "Tears of Guthix", "Fairytale I - Growing Pains"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "warriors_guild_total": 130,
+        "Hitpoints": 50,
+        "Mining": 72,
+        "Agility": 70,
+        "Smithing": 88,
+        "Defence": 65,
+        "Herblore": 70,
+        "Fishing": 62,
+        "Ranged": 70,
+        "Thieving": 78,
+        "Cooking": 70,
+        "Prayer": 52,
+        "Crafting": 70,
+        "Firemaking": 75,
+        "Magic": 75,
+        "Fletching": 60,
+        "Woodcutting": 75,
+        "Runecraft": 76,
+        "Slayer": 69,
+        "Farming": 70,
+        "Construction": 70,
+        "Hunter": 70,
+        "Sailing": 52,
+        "combat": 85,
+        "quest_points": 339
+      },
+      "quests": [],
+      "bosses": [],
+      "minigames": [],
+      "other": ["Quest Point Cape Requirements"]
+    }
+  },
+  "Morytania": {
+    "Easy": {
+      "skills": {
+            "Cooking": 12,
+            "Crafting": 15,
+            "Slayer": 15,
+            "Farming": 47,
+            "combat": 20
+      },
+      "quests": ["Nature Spirit"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 15,
+        "Agility": 42,
+        "Smithing": 50,
+        "Herblore": 22,
+        "Fishing": 50,
+        "Ranged": 40,
+        "Cooking": 40,
+        "Prayer": 47,
+        "Crafting": 45,
+        "Magic": 7,
+        "Fletching": 5,
+        "Woodcutting": 45,
+        "Slayer": 42,
+        "Farming": 47,
+        "Hunter": 29,
+        "combat": 20
+      },
+      "quests": ["Cabin Fever", "Dwarf Cannon", "Ghosts Ahoy", "Lair of Tarn Razorlor", "In Aid of the Myreque"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Attack": 20,
+        "Mining": 55,
+        "Agility": 71,
+        "Smithing": 50,
+        "Defence": 70,
+        "Herblore": 22,
+        "Fishing": 50,
+        "Ranged": 40,
+        "Thieving": 53,
+        "Cooking": 40,
+        "Prayer": 70,
+        "Crafting": 45,
+        "Firemaking": 50,
+        "Magic": 66,
+        "Fletching": 10,
+        "Woodcutting": 50,
+        "Slayer": 58,
+        "Farming": 53,
+        "Construction": 50,
+        "Hunter": 29,
+        "combat": 20,
+        "quest_points": 12
+      },
+      "quests": ["Desert Treasure I", "Dwarf Cannon", "Ghosts Ahoy", "In Aid of the Myreque", "Lair of Tarn Razorlor", "The Great Brain Robbery"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Attack": 70,
+        "Mining": 60,
+        "Strength": 76,
+        "Agility": 71,
+        "Smithing": 50,
+        "Defence": 70,
+        "Herblore": 22,
+        "Fishing": 96,
+        "Ranged": 70,
+        "Thieving": 53,
+        "Cooking": 40,
+        "Prayer": 70,
+        "Crafting": 84,
+        "Firemaking": 80,
+        "Magic": 83,
+        "Fletching": 10,
+        "Woodcutting": 55,
+        "Slayer": 85,
+        "Farming": 53,
+        "Construction": 50,
+        "Hunter": 29,
+        "combat": 20,
+        "quest_points": 12
+      },
+      "quests": ["Desert Treasure I", "Dwarf Cannon", "Ghosts Ahoy", "In Aid of the Myreque", "Lair of Tarn Razorlor", "The Great Brain Robbery", "Shades of Mort'ton", "Lunar Diplomacy"],
+      "bosses": [],
+      "minigames": ["Barrows Brothers"],
+      "other": []
+    }
+  },
+  "Varrock": {
+    "Easy": {
+      "skills": {
+        "Mining": 15,
+        "Agility": 13,
+        "Fishing": 20,
+        "Thieving": 5,
+        "Crafting": 8,
+        "Runecraft": 9
+      },
+      "quests": ["Rune Mysteries"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 15,
+        "Agility": 30,
+        "Herblore": 10,
+        "Fishing": 20,
+        "Thieving": 25,
+        "Crafting": 36,
+        "Firemaking": 40,
+        "Magic": 49,
+        "Runecraft": 9,
+        "Farming": 30,
+        "combat": 40,
+        "quest_points": 32
+      },
+      "quests": ["A Soul's Bane", "The Dig Site", "Enlightened Journey", "Garden of Tranquillity", "Gertrude's Cat", "Tree Gnome Village", "Rune Mysteries"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Mining": 15,
+        "Agility": 51,
+        "Smithing": 20,
+        "Herblore": 10,
+        "Fishing": 20,
+        "Ranged": 40,
+        "Thieving": 53,
+        "Prayer": 52,
+        "Crafting": 36,
+        "Firemaking": 60,
+        "Magic": 54,
+        "Fletching": 10,
+        "Woodcutting": 60,
+        "Runecraft": 9,
+        "Farming": 68,
+        "Construction": 50,
+        "Hunter": 66,
+        "combat": 40,
+        "quest_points": 32
+      },
+      "quests": ["A Soul's Bane", "Desert Treasure I", "Enlightened Journey", "Garden of Tranquillity", "Gertrude's Cat", "Tree Gnome Village", "Rune Mysteries"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Mining": 60,
+        "Agility": 51,
+        "Smithing": 89,
+        "Defence": 40,
+        "Herblore": 90,
+        "Fishing": 20,
+        "Ranged": 40,
+        "Thieving": 53,
+        "Cooking": 95,
+        "Prayer": 52,
+        "Crafting": 61,
+        "Firemaking": 60,
+        "Magic": 86,
+        "Fletching": 81,
+        "Woodcutting": 60,
+        "Runecraft": 78,
+        "Farming": 68,
+        "Construction": 50,
+        "Hunter": 69,
+        "combat": 40,
+        "quest_points": 32
+      },
+      "quests": ["Desert Treasure I", "Dream Mentor", "Enlightened Journey", "Garden of Tranquillity", "Gertrude's Cat", "A Soul's Bane", "Tree Gnome Village"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    }
+  },
+  "Western Provinces": {
+    "Easy": {
+      "skills": {
+        "Mining": 15,
+        "Ranged": 30,
+        "Cooking": 30,
+        "Fletching": 20,
+        "Hunter": 9,
+        "combat": 40
+      },
+      "quests": ["Big Chompy Bird Hunting", "Rune Mysteries"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 40,
+        "Agility": 37,
+        "Smithing": 30,
+        "Herblore": 18,
+        "Fishing": 46,
+        "Ranged": 30,
+        "Cooking": 42,
+        "Crafting": 25,
+        "Firemaking": 35,
+        "Magic": 46,
+        "Fletching": 20,
+        "Woodcutting": 35,
+        "Construction": 5,
+        "Hunter": 31,
+        "combat": 70
+      },
+      "quests": ["Big Chompy Bird Hunting", "Eagles' Peak", "The Eyes of Glouphrie", "One Small Favour", "Monkey Madness I"],
+      "bosses": [],
+      "minigames": ["Pest Control"],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Mining": 70,
+        "Agility": 56,
+        "Smithing": 45,
+        "Herblore": 18,
+        "Fishing": 62,
+        "Ranged": 70,
+        "Thieving": 75,
+        "Cooking": 70,
+        "Crafting": 40,
+        "Firemaking": 50,
+        "Magic": 66,
+        "Fletching": 20,
+        "Woodcutting": 50,
+        "Farming": 68,
+        "Construction": 65,
+        "Hunter": 69,
+        "combat": 100,
+        "quest_points": 100
+      },
+      "quests": ["Eagles' Peak", "The Eyes of Glouphrie", "Recipe for Disaster/Freeing King Awowogei", "Swan Song", "Mourning's End Part I"],
+      "bosses": ["Zulrah"],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Attack": 42,
+        "Hitpoints": 42,
+        "Mining": 70,
+        "Strength": 42,
+        "Agility": 85,
+        "Smithing": 45,
+        "Defence": 42,
+        "Herblore": 18,
+        "Fishing": 62,
+        "Ranged": 70,
+        "Thieving": 85,
+        "Cooking": 70,
+        "Prayer": 22,
+        "Crafting": 40,
+        "Firemaking": 50,
+        "Magic": 66,
+        "Fletching": 85,
+        "Woodcutting": 50,
+        "Slayer": 93,
+        "Farming": 75,
+        "Construction": 65,
+        "Hunter": 69,
+        "combat": 100,
+        "quest_points": 100
+      },
+      "quests": ["Eagles' Peak", "The Eyes of Glouphrie", "Recipe for Disaster/Freeing King Awowogei", "Swan Song", "Mourning's My End Part I"],
+      "bosses": [],
+      "minigames": ["Pest Control"],
+      "other": []
+    }
+  },
+  "Wilderness": {
+    "Easy": {
+      "skills": {
+        "Mining": 15,
+        "Agility": 15,
+        "Magic": 21
+      },
+      "quests": ["Enter the Abyss"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Medium": {
+      "skills": {
+        "Mining": 55,
+        "Strength": 60,
+        "Agility": 60,
+        "Smithing": 50,
+        "Magic": 60,
+        "Woodcutting": 61,
+        "Slayer": 50
+      },
+      "quests": ["Between a Rock...", "Enter the Abyss"],
+      "bosses": [],
+      "minigames": [],
+      "other": []
+    },
+    "Hard": {
+      "skills": {
+        "Mining": 55,
+        "Agility": 64,
+        "Smithing": 75,
+        "Fishing": 53,
+        "Magic": 66,
+        "Woodcutting": 61,
+        "Slayer": 68,
+        "Hunter": 67
+      },
+      "quests": ["Death Plateau", "Enter the Abyss", "Mage Arena I", "Between a Rock..."],
+      "bosses": ["Crazy Archaeologist", "Chaos Fanatic", "Scorpia"],
+      "minigames": [],
+      "other": []
+    },
+    "Elite": {
+      "skills": {
+        "Mining": 85,
+        "Agility": 64,
+        "Smithing": 90,
+        "Herblore": 10,
+        "Fishing": 85,
+        "Ranged": 40,
+        "Thieving": 84,
+        "Cooking": 90,
+        "Firemaking": 75,
+        "Magic": 96,
+        "Fletching": 10,
+        "Woodcutting": 75,
+        "Slayer": 83,
+        "Hunter": 67
+      },
+      "quests": ["Death Plateau", "Desert Treasure I", "Enter the Abyss", "Mage Arena I", "Between a Rock..."],
+      "bosses": ["Callisto", "Venenatis", "Vet'ion", "Chaos Elemental"],
+      "minigames": [],
+      "other": []
+    }
+  }
+}

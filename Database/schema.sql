@@ -60,7 +60,25 @@ CREATE TABLE IF NOT EXISTS quest_requirements (
     FOREIGN KEY (required_quest_id) REFERENCES quests(quest_id)
 );
 
--- 5. THE MASTER TASK POOL (For storing generated task options or templates)
+-- 5. ACHIEVEMENT DIARIES
+CREATE TABLE IF NOT EXISTS achievement_diaries (
+    diary_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    diary_name TEXT,        -- e.g., 'Ardougne'
+    tier TEXT,              -- 'Easy', 'Medium', 'Hard', 'Elite'
+    region TEXT,            -- for region locking
+    is_completed INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS diary_requirements (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    diary_id INTEGER,
+    req_type TEXT,          -- 'SKILL' or 'QUEST'
+    req_name TEXT,          -- e.g., 'Thieving' or 'Plague City'
+    req_value INTEGER,      -- e.g., 53 (set to 1 for quests)
+    FOREIGN KEY(diary_id) REFERENCES achievement_diaries(diary_id)
+);
+
+-- 6. THE MASTER TASK POOL (For storing generated task options or templates)
 CREATE TABLE IF NOT EXISTS tasks_master (
     task_id INTEGER PRIMARY KEY AUTOINCREMENT,
     task_description TEXT NOT NULL,
@@ -70,7 +88,7 @@ CREATE TABLE IF NOT EXISTS tasks_master (
     FOREIGN KEY (associated_shop_id) REFERENCES unlockable_shop(id)
 );
 
--- 6. ACTIVE SLOTS TRACKER (Handles current state and the 3 choices)
+-- 7. ACTIVE SLOTS TRACKER (Handles current state and the 3 choices)
 CREATE TABLE IF NOT EXISTS active_slots (
     slot_type TEXT PRIMARY KEY, -- 'ACTIVE' or 'AFK'
     current_task_id INTEGER,    -- The task currently being worked on
