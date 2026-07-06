@@ -24,6 +24,14 @@ CREATE TABLE IF NOT EXISTS quests (
     status INTEGER DEFAULT 0 -- 0 = Locked, 1 = In Progress, 2 = Completed
 );
 
+CREATE TABLE IF NOT EXISTS quest_xp_rewards (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    quest_id INTEGER,
+    skill_name TEXT NOT NULL,
+    xp_reward INTEGER NOT NULL,
+    FOREIGN KEY (quest_id) REFERENCES quests(quest_id)
+);
+
 -- 3. THE UNLOCK SHOP (Consolidated Regions, Bosses, Raids, Minigames)
 CREATE TABLE IF NOT EXISTS unlockable_shop (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

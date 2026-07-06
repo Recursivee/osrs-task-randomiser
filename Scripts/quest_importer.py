@@ -12,9 +12,6 @@ schema_location = Path(__file__).resolve().parent.parent / "Database" / "schema.
 conn = initialise_database(database_location, schema_location)
 cursor = conn.cursor()
 
-# conn = sqlite3.connect('osrs_tasks.db')
-# cursor = conn.cursor()
-
 def save_to_db(quest_name, data):
     # 1. Insert the main quest (Ignore if already there)
     cursor.execute("INSERT OR IGNORE INTO quests (name, qp) VALUES (?, ?)", 
@@ -93,7 +90,7 @@ def get_batch_quest_contents(titles_batch):
     response = requests.post(url, data=data, headers=headers)
     
     if not response.ok:
-        print(f"  ❌ Server Error: {response.status_code}")
+        print(f"  Server Error: {response.status_code}")
         return []
 
     return response.json().get('query', {}).get('pages', [])
@@ -139,13 +136,56 @@ def parse_quest_data(text):
     # Extract the start point description string
     start_match = re.search(r"\|start\s*=\s*(.*?)\s*(?=\n\||\n\}\})", details_block)
     start_point = start_match.group(1).strip() if start_match else ""
+
+# PARSE SKILL XP REWARDS (COMPREHENSIVE MULTI-MATCH EXTRACTION WITH COMMA HANDLING)
+    xp_rewards = {}
     
+    valid_skills = {
+        "Attack", "Strength", "Defence", "Ranged", "Prayer", "Magic", "Runecraft", "Runecrafting", 
+        "Construction", "Hitpoints", "Agility", "Herblore", "Thieving", "Crafting", "Fletching", 
+        "Slayer", "Hunter", "Mining", "Smithing", "Fishing", "Cooking", "Firemaking", "Woodcutting", 
+        "Farming", "Sailing"
+    }
+    
+    # FIXED REGEX: Allows digits and commas in the second capture group [\d,]+
+    scp_matches = re.findall(r"\{\{\s*SCP\s*\|\s*([^|]+?)\s*\|\s*([\d,]+)(?:[|}])", text, re.IGNORECASE)
+    for skill_raw, amount_raw in scp_matches:
+        skill = skill_raw.strip().capitalize()
+        if skill == "Runecrafting": 
+            skill = "Runecraft"
+            
+        # Strip out formatting commas (e.g., 40,000 -> 40000)
+        clean_amount = re.sub(r'[^\d]', '', amount_raw)
+        
+        if skill in valid_skills and clean_amount.isdigit():
+            xp_val = int(clean_amount)
+            # Level requirement filter guard
+            if xp_val > 99:
+                xp_rewards[skill] = xp_rewards.get(skill, 0) + xp_val
+
+    # Backup pattern for pages using lowercase {{xp|...}} macros
+    xp_matches = re.findall(r"\{\{\s*xp\s*\|\s*([^|}]+?)\s*\|\s*([^|}]+?)\s*\}\}", text, re.IGNORECASE)
+    for param1, param2 in xp_matches:
+        p1, p2 = param1.strip(), param2.strip()
+        
+        skill_candidate = p1.capitalize() if p1.capitalize() in valid_skills else p2.capitalize()
+        amount_candidate = p2 if p1.capitalize() in valid_skills else p1
+        
+        if skill_candidate in valid_skills:
+            if skill_candidate == "Runecrafting": 
+                skill_candidate = "Runecraft"
+            clean_amount = re.sub(r'[^\d]', '', amount_candidate)
+            if clean_amount.isdigit() and int(clean_amount) > 99:
+                xp_rewards[skill_candidate] = xp_rewards.get(skill_candidate, 0) + int(clean_amount)
+    
+
     return {
         "skills": [{"skill": s, "level": l} for s, l in skills],
         "quests": list(set(cleaned_quests)),
         "qp": qp,
         "series": series,
-        "start_point": start_point
+        "start_point": start_point,
+        "xp_rewards": xp_rewards
     }
 
 def determine_region(series, start_text):
@@ -199,6 +239,14 @@ def save_quest_to_db(title, data):
             INSERT OR IGNORE INTO skill_requirements (target_type, target_id, skill_name, level_required)
             VALUES ('QUEST', ?, ?, ?)
         ''', (quest_id, s['skill'].strip(), s['level']))
+    
+    # Insert XP Rewards 
+    cursor.execute("DELETE FROM quest_xp_rewards WHERE quest_id = ?", (quest_id,))
+    for skill, xp in data.get('xp_rewards', {}).items():
+        cursor.execute('''
+            INSERT INTO quest_xp_rewards (quest_id, skill_name, xp_reward)
+            VALUES (?, ?, ?)
+        ''', (quest_id, skill, xp))
 
     return (quest_id, data['quests'])
 
