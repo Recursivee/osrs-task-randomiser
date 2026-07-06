@@ -1,0 +1,8 @@
+# Ignore python cache directories
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore local database files
+*.db
+*.sqlite3
