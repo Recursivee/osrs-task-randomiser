@@ -1,0 +1,225 @@
+{
+  "Alfred Grimhand's Barcrawl": {
+    "region": "Kandarin",
+    "unlocks_quests": ["Horror from the Deep", "Scorpion Catcher"],
+    "xp_rewards": [],
+    "skills": {},
+    "quests": [],
+    "miniquests": [],
+    "other": []
+  },
+  "Barbarian Training": {
+    "region": "Kandarin",
+    "unlocks_quests": ["Dragon Slayer II"],
+    "xp_rewards": [],
+    "skills": {
+      "Firemaking": 35,
+      "Agility": 15,
+      "Strength": 35,
+      "Fishing": 55,
+      "Farming": 15,
+      "Crafting": 11,
+      "Smithing": 5,
+      "Herblore": 4
+    },
+    "quests": ["Tai Bwo Wannai Trio"],
+    "miniquests": [],
+    "other": []
+  },
+  "Bear Your Soul": {
+    "region": "Kourend",
+    "unlocks_quests": [],
+    "xp_rewards": [],
+    "skills": {},
+    "quests": [],
+    "miniquests": [],
+    "other": []
+  },
+  "Curse of the Empty Lord": {
+    "region": "Kandarin",
+    "unlocks_quests": ["The General's Shadow"],
+    "xp_rewards": [],
+    "skills": {
+        "Thieving": 53
+    },
+    "quests": ["Desert Treasure I", "The Restless Ghost"],
+    "miniquests": [],
+    "other": []
+  },
+  "Daddy's Home": {
+    "region": "Misthalin",
+    "unlocks_quests": [],
+    "xp_rewards": {
+        "Construction": 944
+    },
+    "skills": {},
+    "quests": [],
+    "miniquests": [],
+    "other": []
+  },
+  "The Enchanted Key": {
+    "region": "Kandarin",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {
+        "Crafting": 24
+    },
+    "quests": ["Making History"],
+    "miniquests": [],
+    "other": []
+  },
+  "Enter the Abyss": {
+    "region": "Wilderness",
+    "unlocks_quests": ["Temple of the Eye", "Devious Minds", "Wanted!"],
+    "xp_rewards": {
+        "Runecraft": 1000
+    },
+    "skills": {},
+    "quests": ["Rune Mysteries"],
+    "miniquests": [],
+    "other": []
+  },
+  "Family Pest": {
+    "region": "Misthalin",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {},
+    "quests": ["Family Crest"],
+    "miniquests": [],
+    "other": []
+  },
+  "The Frozen Door": {
+    "region": "Asgarnia",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {
+        "Agility": 70,
+        "Strength": 70,
+        "Ranged": 70
+    },
+    "quests": ["Desert Treasure I"],
+    "miniquests": [],
+    "other": ["70 Agility OR 70 Strength OR 70 Hitpoints OR 70 Ranged to enter GWD areas"]
+  },
+  "The General's Shadow": {
+    "region": "Fremennik Province",
+    "unlocks_quests": ["Secrets of the North"],
+    "xp_rewards": {
+        "Slayer": 2000
+    },
+    "skills": {},
+    "quests": ["Fight Arena", "Desert Treasure I"],
+    "miniquests": ["Curse of the Empty Lord"],
+    "other": []
+  },
+  "His Faithful Servants": {
+    "region": "Morytania",
+    "unlocks_quests": ["Desert Treasure II - The Fallen Empire"],
+    "xp_rewards": {
+        "Prayer": 20000
+    },
+    "skills": {
+        "combat": 70
+    },
+    "quests": ["Priest in Peril"],
+    "miniquests": [],
+    "other": ["Barrows Brothers"]
+  },
+  "Hopespear's Will": {
+    "region": "Kandarin",
+    "unlocks_quests": [],
+    "xp_rewards": {
+        "Prayer": 38750
+    },
+    "skills": {
+        "Prayer": 50
+    },
+    "quests": ["The Restless Ghost", "Desert Treasure I", "Fairytale II - Cure a Queen", "Land of the Goblins"],
+    "miniquests": [],
+    "other": []
+  },
+  "In Search of Knowledge": {
+    "region": "Kourend",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {
+        "combat": 45
+    },
+    "quests": [],
+    "miniquests": [],
+    "other": []
+  },
+  "Into the Tombs": {
+    "region": "Kharidian Desert",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {
+        "combat": 95
+    },
+    "quests": ["Beneath Cursed Sands"],
+    "miniquests": [],
+    "other": ["Tombs of Amascut"]
+  },
+  "Lair of Tarn Razorlor": {
+    "region": "Morytania",
+    "unlocks_quests": [],
+    "xp_rewards": {
+        "Slayer": 5000
+    },
+    "skills": {
+      "Slayer": 40,
+      "Prayer": 43,
+      "combat": 50
+    },
+    "quests": ["Haunted Mine"],
+    "miniquests": [],
+    "other": []
+  },
+  "Mage Arena I": {
+    "region": "Wilderness",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {
+      "Magic": 60,
+      "combat": 55
+    },
+    "quests": [],
+    "miniquests": [],
+    "other": []
+  },
+  "Mage Arena II": {
+    "region": "Wilderness",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {
+      "Magic": 75,
+      "combat": 80
+    },
+    "quests": [],
+    "miniquests": ["Mage Arena I"],
+    "other": []
+  },
+  "Skippy and the Mogres": {
+    "region": "Asgarnia",
+    "unlocks_quests": ["Rag and Bone Man II"],
+    "xp_rewards": {},
+    "skills": {
+      "Cooking": 20
+    },
+    "quests": [],
+    "miniquests": [],
+    "other": []
+  },
+  "Vale Totems": {
+    "region": "Misthalin",
+    "unlocks_quests": [],
+    "xp_rewards": {},
+    "skills": {
+        "Fletching": 20,
+        "Woodcutting": 15
+    },
+    "quests": ["Children of the Sun"],
+    "miniquests": [],
+    "other": []
+  }
+}

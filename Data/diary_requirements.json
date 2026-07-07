@@ -390,7 +390,7 @@
             "Woodcutting": 36,
             "Farming": 26 
       },
-      "quests": ["Elemental Workshop II", "Alfred Grimhand's Barcrawl", "Waterfall Quest", "Fairytale I - Growing Pains"],
+      "quests": ["Elemental Workshop II", "Alfred Grimhand's Barcrawl", "Waterfall Quest", "Fairytale I - Growing Pains", "Alfred Grimhand's Barcrawl"],
       "bosses": [],
       "minigames": [],
       "other": []
@@ -418,7 +418,7 @@
         "Construction": 50,
         "quest_points": 12
       },
-      "quests": ["Desert Treasure I", "Alfred Grimhand's Barcrawl", "Fairytale I - Growing Pains", "Elemental Workshop II"],
+      "quests": ["Desert Treasure I", "Alfred Grimhand's Barcrawl", "Fairytale I - Growing Pains", "Elemental Workshop II", "Barbarian Training"],
       "bosses": [],
       "minigames": ["Barbarian Assault"],
       "other": []
@@ -446,7 +446,7 @@
         "Construction": 50,
         "quest_points": 12
       },
-      "quests": ["Alfred Grimhand's Barcrawl", "Family Crest", "Lunar Diplomacy", "Desert Treasure I", "Fairytale I - Growing Pains", "Elemental Workshop II"],
+      "quests": ["Alfred Grimhand's Barcrawl", "Family Crest", "Lunar Diplomacy", "Desert Treasure I", "Fairytale I - Growing Pains", "Elemental Workshop II", "Barbarian Training"],
       "bosses": [],
       "minigames": ["Barbarian Assault"],
       "other": []
@@ -822,7 +822,7 @@
         "combat": 20,
         "quest_points": 12
       },
-      "quests": ["Desert Treasure I", "Dwarf Cannon", "Ghosts Ahoy", "In Aid of the Myreque", "Lair of Tarn Razorlor", "The Great Brain Robbery", "Shades of Mort'ton", "Lunar Diplomacy"],
+      "quests": ["Desert Treasure I", "Dwarf Cannon", "Ghosts Ahoy", "In Aid of the Myreque", "Lair of Tarn Razorlor", "The Great Brain Robbery", "Shades of Mort'ton", "Lunar Diplomacy", "Barbarian Training"],
       "bosses": [],
       "minigames": ["Barrows Brothers"],
       "other": []

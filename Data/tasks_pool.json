@@ -1,11 +1,13 @@
 {
     "Task_Weighting": {
-        "Skill": 0.30,
-        "Quest": 0.30,
+        "Skill": 0.25,
+        "Quest": 0.25,
         "Boss": 0.10,
         "Minigame": 0.10,
         "Raid": 0.05,
-        "Slayer": 0.15
+        "Slayer": 0.10,
+        "Achievement": 0.10,
+        "Clue": 0.05
     },
     
     "Tasks": [
@@ -24,22 +26,22 @@
             "task_type": null,
             "description_template": "Reach level {amount} in {skill}",
             "difficulty_tier": "Medium",
-            "min_amount": 5,
-            "max_amount": 10
+            "min_amount": 4,
+            "max_amount": 8
         },
         {
             "template_id": 3,
             "category": "Quest",
             "task_type": "Active",
             "description_template": "Complete the quest: {content_name}",
-            "difficulty_tier": "Dynamic"
+            "difficulty_tier": "Medium"
         },    
         {
             "template_id": 4,
             "category": "Boss",
             "task_type": null,
             "description_template": "Kill {content_name} {amount} times",
-            "difficulty_tier": "Medium",
+            "difficulty_tier": "Hard",
             "min_amount": 5,
             "max_amount": 15
         },
@@ -47,17 +49,17 @@
             "template_id": 5,
             "category": "Minigame",
             "task_type": "Active",
-            "description_template": "Complete {amount} rounds of {content_name}",
+            "description_template": "Complete {content_name} {amount} times",
             "difficulty_tier": "Easy",
             "min_amount": 5,
-            "max_amount": 15
+            "max_amount": 10
         },
         {
             "template_id": 6,
             "category": "Raid",
             "task_type": "Active",
-            "description_template": "Reach level {amount} in {skill}",
-            "difficulty_tier": "Hard"
+            "description_template": "Clear {content_name} {amount} times",
+            "difficulty_tier": "Elite"
         },
         {
             "template_id": 7,
@@ -67,6 +69,60 @@
             "difficulty_tier": "Medium",
             "min_amount": 1,
             "max_amount": 5
+        },
+        {
+            "template_id": 8,
+            "category": "Achievement",
+            "task_type": "Active",
+            "description_template": "Complete the achievement diary: {content_name}",
+            "difficulty_tier": "Hard",
+            "min_amount": 1,
+            "max_amount": 1
+        },
+        {
+            "template_id": 9,
+            "category": "Clue",
+            "task_type": null,
+            "description_template": "Complete {amount} of Beginner or higher Clues",
+            "difficulty_tier": "Easy",
+            "min_amount": 1,
+            "max_amount": 5
+        },
+        {
+            "template_id": 10,
+            "category": "Clue",
+            "task_type": null,
+            "description_template": "Complete {amount} of Medium or higher Clues",
+            "difficulty_tier": "Medium",
+            "min_amount": 1,
+            "max_amount": 5
+        },
+        {
+            "template_id": 11,
+            "category": "Clue",
+            "task_type": null,
+            "description_template": "Complete {amount} of Elite or Master Clues",
+            "difficulty_tier": "Elite",
+            "min_amount": 1,
+            "max_amount": 5
+        },
+        {
+            "template_id": 12,
+            "category": "Skill",
+            "task_type": null,
+            "description_template": "Gain {amount} of xp in {skill}",
+            "difficulty_tier": "Hard",
+            "min_amount": 100000,
+            "max_amount": 350000
+        },
+        {
+            "template_id": 13,
+            "category": "Minigame",
+            "task_type": "Active",
+            "description_template": "Complete {content_name} {amount} times",
+            "difficulty_tier": "Medium",
+            "min_amount": 10,
+            "max_amount": 25
         }
     ]
 }

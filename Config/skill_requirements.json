@@ -1,0 +1,27 @@
+{
+  "Herblore": {
+    "quests": ["Druidic Ritual"],
+    "regions": ["Asgarnia"],
+    "requires_shop_unlock": false
+  },
+  "Runecraft": {
+    "quests": ["Enter the Abyss"],
+    "regions": ["Wilderness"],
+    "requires_shop_unlock": false
+  },
+  "Slayer": {
+    "quests": ["A Porcine of Interest"],
+    "regions": ["Misthalin"],
+    "requires_shop_unlock": false
+  },
+  "Sailing": {
+    "quests": ["Pandemonium"],
+    "regions": ["Asgarnia"],
+    "requires_shop_unlock": false
+  },
+  "Construction": {
+    "quests": ["Daddy's Home"],
+    "regions": ["Misthalin"],
+    "requires_shop_unlock": false
+  }
+}

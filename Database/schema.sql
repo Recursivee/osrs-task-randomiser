@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS metadata (
 CREATE TABLE IF NOT EXISTS quests (
     quest_id INTEGER PRIMARY KEY AUTOINCREMENT,
     quest_name TEXT UNIQUE NOT NULL,
+    quest_type TEXT DEFAULT 'MAIN',
     difficulty TEXT,
     quest_point_reward INTEGER DEFAULT 0,
     region TEXT, -- starting location for region calculation
