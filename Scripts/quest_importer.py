@@ -9,8 +9,6 @@ from init_db import initialise_database
 database_location = Path(__file__).resolve().parent.parent / "Database" / "database.db"
 schema_location = Path(__file__).resolve().parent.parent / "Database" / "schema.sql"
 
-conn = initialise_database(database_location, schema_location)
-cursor = conn.cursor()
 
 def save_to_db(quest_name, data):
     # 1. Insert the main quest (Ignore if already there)
@@ -267,30 +265,52 @@ def link_quest_dependencies(pending_dependencies):
     conn.commit()
     
 
-titles = get_all_quest_titles()
-pending_deps = []
 
-# Process in chunks
-chunk_size = 50
-for i in range(0, len(titles), chunk_size):
-    batch = titles[i : i + chunk_size]
-    pages = get_batch_quest_contents(batch)
-    
-    for page in pages:
-        title = page.get('title')
-        if "revisions" in page:
-            content = page['revisions'][0]['slots']['main']['content']
-            data = parse_quest_data(content)
-            
-            # Save the quest and skills, then queue the dependencies
-            quest_info = save_quest_to_db(title, data)
-            pending_deps.append(quest_info)
-            
-            print(f"  💾 Saved {title} to database.")
-    
-    conn.commit() # Commit after each batch
-    time.sleep(5)
+# Create global placeholders for database connections
+conn = None
+cursor = None
 
-# Final Pass: Link all the IDs together
-link_quest_dependencies(pending_deps)
-print("Import complete!")
+
+def run_scraper(master_conn, master_cursor):
+    """Main entry point callable by the master database configuration script."""
+    global conn, cursor
+    # Point  global scraper variables to the master script's session
+    conn = master_conn
+    cursor = master_cursor
+
+    print("Fetching quest lists from the OSRS Wiki...")
+    titles = get_all_quest_titles()
+    pending_deps = []
+
+    # Process in chunks
+    chunk_size = 50
+    for i in range(0, len(titles), chunk_size):
+        batch = titles[i : i + chunk_size]
+        pages = get_batch_quest_contents(batch)
+        
+        for page in pages:
+            title = page.get('title')
+            if "revisions" in page:
+                content = page['revisions'][0]['slots']['main']['content']
+                data = parse_quest_data(content)
+                
+                # Save the quest and skills, then queue the dependencies
+                quest_info = save_quest_to_db(title, data)
+                pending_deps.append(quest_info)
+                
+                print(f"  💾 Saved {title} to database.")
+        
+        conn.commit() # Commit after each batch
+        time.sleep(5)
+
+    # Final Pass: Link all the IDs together
+    link_quest_dependencies(pending_deps)
+    print("Import complete!")
+
+# This keeps it running if launched manually from terminal
+if __name__ == "__main__":
+    from init_db import initialise_database
+    local_conn = initialise_database(database_location, schema_location)
+    local_cursor = local_conn.cursor()
+    run_scraper(local_conn, local_cursor)
+    local_conn.close()
