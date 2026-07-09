@@ -76,6 +76,13 @@
             "skill_requirements": {},
             "region_dependecy": null,
             "unlocked": false
+        },
+        {
+            "name": "UNKNOWN",
+            "quest_requirements": ["PLACEHOLDER, NEVER UNLOCKABLE"], 
+            "skill_requirements": {},
+            "region_dependecy": null,
+            "unlocked": false
         }
     ],
 

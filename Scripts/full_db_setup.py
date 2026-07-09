@@ -53,34 +53,44 @@ def seed_starting_stats(cursor):
     print(f"   [+] Successfully assigned {len(skills_list)} starter skills into 'player_stats'.")
 
 def seed_unlockable_shop(cursor):
-    # Adjust path if needed
-    json_path = BASE_DIR / "Data" / "unlockable_content.json"
-        
-    if not json_path.exists():
-        print("   [!] Error: unlockable_content.json could not be located.")
+    # 1. Paths to your data files
+    config_dir = BASE_DIR / "Config"
+    data_dir = BASE_DIR / "Data"
+    
+    shop_content_path = data_dir / "unlockable_content.json"
+    meta_data_path = config_dir / "meta_data.json"
+
+    if not shop_content_path.exists() or not meta_data_path.exists():
+        print(f"   [!] Error: Ensure both unlockable_content.json and meta_data.json exist.")
         return
 
-    with open(json_path, "r", encoding="utf-8") as f:
+    # 2. Load the dynamic key pricing matrix from meta_data.json
+    with open(meta_data_path, "r", encoding="utf-8") as f:
+        meta_config = json.load(f)
+    
+    shop_pricing = meta_config.get("Shop", {})
+    
+    # Map the JSON keys from meta_data.json to your exact SQL content_type strings
+    cost_matrix = {
+        "REGION": shop_pricing.get("Region", 0),
+        "BOSS": shop_pricing.get("Boss", 1),
+        "RAID": shop_pricing.get("Raid", 3),
+        "MINIGAME": shop_pricing.get("Minigame", 1)
+    }
+
+    # 3. Load the structural shop item assets
+    with open(shop_content_path, "r", encoding="utf-8") as f:
         shop_data = json.load(f)
 
-    print("   [+] Populating progression storefront costs and sub-skill restrictions...")
+    print("   [+] Populating progression storefront costs from meta_data.json pricing rules...")
     shop_item_count = 0
     skill_req_count = 0
 
-    # Group configuration categories directly mapped to schema content_types
     category_map = {
         "Regions": "REGION",
         "Bosses": "BOSS",
         "Raids": "RAID",
         "Minigames": "MINIGAME"
-    }
-
-    # Default storefront unlocks pricing matrix matching schema constraints
-    cost_matrix = {
-        "REGION": 0,
-        "BOSS": 1,
-        "RAID": 3,
-        "MINIGAME": 1
     }
 
     for json_key, content_type in category_map.items():
@@ -89,58 +99,51 @@ def seed_unlockable_shop(cursor):
         for item in items_list:
             name = item["name"]
             is_initially_unlocked = 1 if item.get("unlocked", False) else 0
+            
+            # Pull the cost dynamically from our meta_data matrix wrapper!
             key_cost = cost_matrix[content_type]
             
-            # Unpack parent quest requirement lists safely 
-            # (e.g. ["Children of the Sun"] or "Priest in Peril")
+            # Safely handle singular string or multi-array quest strings
             quest_reqs = item.get("quest_requirements", [])
-            parent_id = None
-            
+            parent_quest_name = None
             if isinstance(quest_reqs, list) and len(quest_reqs) > 0:
                 parent_quest_name = quest_reqs[0]
             elif isinstance(quest_reqs, str):
                 parent_quest_name = quest_reqs
-            else:
-                parent_quest_name = None
 
-            # Look up quest ID dynamically 
+            # Connect parent quest identifiers
+            parent_id = None
             if parent_quest_name:
                 cursor.execute("SELECT quest_id FROM quests WHERE quest_name = ?", (parent_quest_name,))
                 row = cursor.fetchone()
                 if row:
                     parent_id = row[0]
-                else:
-                    print(f"   [!] Warning: Quest '{parent_quest_name}' needed for '{name}' not found in DB.")
 
-            # 1. Insert item into the unlockable storefront pool
+            # Write core milestone profile
             cursor.execute("""
                 INSERT OR IGNORE INTO unlockable_shop (name, content_type, key_cost, parent_quest_id, is_unlocked)
                 VALUES (?, ?, ?, ?, ?)
-            """, (name, content_type, key_cost, parent_id, is_initially_unlocked))
+            """, (name, content_type, int(key_cost), parent_id, is_initially_unlocked))
             shop_item_count += 1
 
-            # Get the accurate item ID inserted
+            # Fetch structural reference ID for requirements insertion pass
             cursor.execute("SELECT id FROM unlockable_shop WHERE name = ?", (name,))
             shop_item_db_id = cursor.fetchone()[0]
 
-            # 2. Insert corresponding profile skill rules into skill_requirements
-            # Maps entry parameters matching target_type 'SHOP_ITEM'
+            # Map combat and skilling limitations to skill_requirements table
             skill_requirements = item.get("skill_requirements", {})
             for skill, level_needed in skill_requirements.items():
-                # Capitalise input keys to guarantee clean matching strings (e.g. 'slayer' -> 'Slayer')
-                clean_skill_name = skill.strip().capitalize()
-                
                 cursor.execute("""
                     INSERT INTO skill_requirements (target_type, target_id, skill_name, level_required)
                     VALUES ('SHOP_ITEM', ?, ?, ?)
-                """, (shop_item_db_id, clean_skill_name, int(level_needed)))
+                """, (shop_item_db_id, skill.strip().capitalize(), int(level_needed)))
                 skill_req_count += 1
                 
     print(f"   [+] Successfully seeded {shop_item_count} unlock milestones into 'unlockable_shop'.")
-    print(f"   [+] Applied {skill_req_count} shop tier skill dependencies into 'skill_requirements'.")
+    print(f"   [+] Dynamic balancing check: Regions cost {cost_matrix['REGION']}, Bosses cost {cost_matrix['BOSS']}, Raids cost {cost_matrix['RAID']}.")
 
 def seed_tasks_master(cursor):
-    json_path = BASE_DIR / "Data" / "tasks_pool.json"
+    json_path = BASE_DIR / "Config" / "tasks_pool.json"
         
     if not json_path.exists():
         print("   [!] Error: tasks_pool.json could not be located.")
