@@ -332,7 +332,7 @@
         "category": "Slayer",
         "quest_requirements": ["Enter the Abyss"],
         "skill_requirements": {"slayer": 85, "combat": 85},
-        "region_dependecy": "Misthalin",
+        "region_dependecy": "Wilderness",
         "unlocked": false
     },
     {

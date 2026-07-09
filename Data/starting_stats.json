@@ -1,9 +1,6 @@
 {
     "Character": {
-        "combat": 3,
-        "total": 29,
-        "quest_points": 1,
-        "warriors_guild_total": 2
+        "quest_points": 1
     },
 
     "Skills": [
@@ -30,7 +27,9 @@
         {"name": "Farming", "level": 1, "experience": 0, "unlocked": true },
         {"name": "Construction", "level": 1, "experience": 0, "unlocked": false },
         {"name": "Hunting", "level": 1, "experience": 0, "unlocked": true },
-        {"name": "Sailing", "level": 1, "experience": 0, "unlocked": false }
-        
+        {"name": "Sailing", "level": 1, "experience": 0, "unlocked": false },
+        {"name": "combat", "level": 3, "experience": 0, "unlocked": false },
+        {"name": "warriors_guild_total", "level": 2, "experience": 0, "unlocked": false },
+        {"name": "total", "level": 29, "experience": 0, "unlocked": false }
     ]
 }

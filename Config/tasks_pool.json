@@ -39,7 +39,7 @@
         {
             "template_id": 4,
             "category": "Boss",
-            "task_type": null,
+            "task_type": "Active",
             "description_template": "Kill {content_name} {amount} times",
             "difficulty_tier": "Hard",
             "min_amount": 5,
@@ -82,7 +82,7 @@
         {
             "template_id": 9,
             "category": "Clue",
-            "task_type": null,
+            "task_type": "AFK",
             "description_template": "Complete {amount} of Beginner or higher Clues",
             "difficulty_tier": "Easy",
             "min_amount": 1,
@@ -91,7 +91,7 @@
         {
             "template_id": 10,
             "category": "Clue",
-            "task_type": null,
+            "task_type": "AFK",
             "description_template": "Complete {amount} of Medium or higher Clues",
             "difficulty_tier": "Medium",
             "min_amount": 1,
@@ -100,7 +100,7 @@
         {
             "template_id": 11,
             "category": "Clue",
-            "task_type": null,
+            "task_type": "AFK",
             "description_template": "Complete {amount} of Elite or Master Clues",
             "difficulty_tier": "Elite",
             "min_amount": 1,

@@ -20,7 +20,7 @@
     "skill_check": {
         "Slow": ["Slayer", "Runecraft", "Herblore", "Farming"],
         "Expensive": ["Construction"],
-        "Excluded": ["Hitpoints"]
+        "Excluded": ["Hitpoints", "combat", "warriors_guild_total", "total"]
     },
 
     "XP_Levels": {

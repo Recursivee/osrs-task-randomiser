@@ -103,6 +103,9 @@ def seed_unlockable_shop(cursor):
             # Pull the cost dynamically from our meta_data matrix wrapper!
             key_cost = cost_matrix[content_type]
             
+            # Handle region dependency mapping safely (handling both spelling variants from your JSON)
+            region_dependency = item.get("region_dependency") or item.get("region_dependecy")
+
             # Safely handle singular string or multi-array quest strings
             quest_reqs = item.get("quest_requirements", [])
             parent_quest_name = None
@@ -119,11 +122,11 @@ def seed_unlockable_shop(cursor):
                 if row:
                     parent_id = row[0]
 
-            # Write core milestone profile
+            # FIX: Included ALL 6 matching values in the binding tuple wrapper!
             cursor.execute("""
-                INSERT OR IGNORE INTO unlockable_shop (name, content_type, key_cost, parent_quest_id, is_unlocked)
-                VALUES (?, ?, ?, ?, ?)
-            """, (name, content_type, int(key_cost), parent_id, is_initially_unlocked))
+                INSERT OR IGNORE INTO unlockable_shop (name, content_type, key_cost, parent_quest_id, region_dependency, is_unlocked)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (name, content_type, int(key_cost), parent_id, region_dependency, is_initially_unlocked))
             shop_item_count += 1
 
             # Fetch structural reference ID for requirements insertion pass

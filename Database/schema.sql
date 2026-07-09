@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS unlockable_shop (
     content_type TEXT NOT NULL, -- 'REGION', 'BOSS', 'MINIGAME', 'RAID'
     key_cost INTEGER NOT NULL,
     parent_quest_id INTEGER, -- Optional quest needed to access it
+    region_dependency TEXT,
     is_unlocked BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (parent_quest_id) REFERENCES quests(quest_id)
 );
@@ -96,6 +97,10 @@ CREATE TABLE IF NOT EXISTS active_slots (
     choice_1_id INTEGER,        -- Rolled choice 1
     choice_2_id INTEGER,        -- Rolled choice 2
     choice_3_id INTEGER,        -- Rolled choice 3
+    current_task_description TEXT,
+    choice_1_description TEXT,
+    choice_2_description TEXT,
+    choice_3_description TEXT,
     FOREIGN KEY (current_task_id) REFERENCES tasks_master(task_id),
     FOREIGN KEY (choice_1_id) REFERENCES tasks_master(task_id),
     FOREIGN KEY (choice_2_id) REFERENCES tasks_master(task_id),
