@@ -9,8 +9,13 @@ DATA_DIR = Path(__file__).resolve().parent / "Data"
 POOL_PATH = CONFIG_DIR / "tasks_pool.json" if (CONFIG_DIR / "tasks_pool.json").exists() else DATA_DIR / "tasks_pool.json"
 
 def get_current_player_stats(cursor):
-    """Returns a dictionary of {SkillName: CurrentLevel} ONLY for unlocked skills."""
-    cursor.execute("SELECT skill_name, current_level FROM player_stats WHERE is_unlocked = 1")
+    """Returns a dictionary of {SkillName: CurrentLevel} for unlocked or virtual skills."""
+    cursor.execute("""
+        SELECT skill_name, current_level 
+        FROM player_stats 
+        WHERE is_unlocked = 1 
+           OR skill_name IN ('Combat', 'Total', 'Warriors_guild_total')
+    """)
     return {row[0]: row[1] for row in cursor.fetchall()}
 
 def is_quest_eligible(quest_id, cursor, player_stats):
@@ -140,7 +145,10 @@ def gather_eligible_content(cursor, player_stats):
         """, (shop_id,))
         skills_pass = True
         for s_name, s_level in cursor.fetchall():
-            if player_stats.get(s_name, 1) < s_level:
+            # Standardize skill matching case to match your database schema ("Combat", "Attack", etc.)
+            clean_s_name = s_name.strip().capitalize()
+            
+            if player_stats.get(clean_s_name, 1) < s_level:
                 skills_pass = False
                 break
         
@@ -153,6 +161,7 @@ def gather_eligible_content(cursor, player_stats):
             pools["Minigame"].append(name)
         elif content_type == "RAID":
             pools["Raid"].append(name)
+
 
     cursor.execute("SELECT diary_name, tier FROM achievement_diaries WHERE is_completed = 0")
     for d_name, tier in cursor.fetchall():
@@ -227,20 +236,47 @@ def generate_three_choices(conn, cursor):
         meta_value = rolled_amount
 
         if rolled_category == "Skill":
-            rolled_skill = random.choice(content_pools["Skill"])
+            available_skills = content_pools["Skill"]
+            
+            # Dynamic skill weighting based on level
+            skill_weights = []
+            for skill in available_skills:
+                lvl = player_stats.get(skill, 1)
+                weight = ((100 - lvl) / 100) ** 2
+                skill_weights.append(weight)
+            
+            rolled_skill = random.choices(available_skills, weights=skill_weights, k=1)[0]
             current_level = player_stats[rolled_skill]
             meta_target = rolled_skill
 
             if template.get("template_id") == 12 and current_level < 50:
                 continue
 
+            # Check if this is a standard level milestone task (e.g., "Reach level 50")
             if "level" in description.lower():
                 rolled_amount = current_level + rolled_amount
                 if rolled_amount > 99: rolled_amount = 99
                 if rolled_amount <= current_level: continue
                 meta_value = rolled_amount
+                task_text = description.format(amount=rolled_amount, skill=rolled_skill)
             
-            task_text = description.format(amount=rolled_amount, skill=rolled_skill)
+            # --- FIXED: Catch any template expecting 'new_xp' ---
+            elif "reaching" in description.lower() or "total" in description.lower() or "new_xp" in description:
+                # Query the database for current absolute XP
+                cursor.execute("SELECT current_xp FROM player_stats WHERE skill_name = ?", (rolled_skill,))
+                skill_row = cursor.fetchone()
+                current_xp = skill_row[0] if skill_row else 0
+                
+                # Calculate the target XP goal
+                new_xp = current_xp + rolled_amount
+                meta_value = new_xp
+                
+                # Safely format passing all three required variables
+                task_text = description.format(amount=rolled_amount, skill=rolled_skill, new_xp=new_xp)
+                
+            else:
+                # Fallback standard XP gain format
+                task_text = description.format(amount=rolled_amount, skill=rolled_skill)
         
         elif rolled_category in ["Quest", "Boss", "Minigame", "Raid", "Achievement"]:
             specific_content = random.choice(content_pools[rolled_category])

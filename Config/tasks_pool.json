@@ -2,11 +2,11 @@
     "Task_Weighting": {
         "Skill": 0.25,
         "Quest": 0.25,
-        "Boss": 0.10,
-        "Minigame": 0.10,
+        "Boss": 0.05,
+        "Minigame": 0.05,
         "Raid": 0.05,
         "Slayer": 0.10,
-        "Achievement": 0.10,
+        "Achievement": 0.20,
         "Clue": 0.05
     },
     
@@ -110,7 +110,7 @@
             "template_id": 12,
             "category": "Skill",
             "task_type": null,
-            "description_template": "Gain {amount} of xp in {skill}",
+            "description_template": "Gain {amount:,} xp (reaching {new_xp:,} total) in {skill}",
             "difficulty_tier": "Hard",
             "min_amount": 100000,
             "max_amount": 350000

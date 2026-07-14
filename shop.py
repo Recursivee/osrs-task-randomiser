@@ -97,7 +97,7 @@ def _browse_and_buy(conn, cursor, content_type, cost, current_gold):
         # --- 2. PROGRESSION ENFORCEMENT ---
         # A. Quest Gate: Parent quest must be fully completed (status 2)
         if parent_quest_id is not None and quest_status != 2:
-            print(f"  [🔒 LOCK] {name} (Requires quest completion: '{parent_quest_name}')")
+            print(f"  [🔒 LOCKED] {name} (Requires quest completion: '{parent_quest_name}')")
             continue
 
         # B. Skill Level Gates from skill_requirements table
@@ -109,7 +109,9 @@ def _browse_and_buy(conn, cursor, content_type, cost, current_gold):
         skills_pass = True
         failed_skills = []
         for s_name, s_level in cursor.fetchall():
-            cursor.execute("SELECT current_level FROM player_stats WHERE skill_name = ?", (s_name,))
+            s_name_clean = s_name.strip().capitalize()
+
+            cursor.execute("SELECT current_level FROM player_stats WHERE skill_name = ?", (s_name_clean,))
             lvl_row = cursor.fetchone()
             current_lvl = lvl_row[0] if lvl_row else 1
             if current_lvl < s_level:
@@ -118,7 +120,7 @@ def _browse_and_buy(conn, cursor, content_type, cost, current_gold):
 
         if not skills_pass:
             req_str = ", ".join(failed_skills)
-            print(f"  [🔒 LOCK] {name} (Requires levels: {req_str})")
+            print(f"  [🔒 LOCKED] {name} (Requires levels: {req_str})")
             continue
 
         # If it passes region locks, quest locks, and level rules, display it as purchasable

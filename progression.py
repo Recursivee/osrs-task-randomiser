@@ -178,27 +178,73 @@ def handle_completions(conn, cursor):
         difficulty_tier = _get_task_difficulty_tier(template_id)
         gold_pay = _get_gold_reward_for_tier(difficulty_tier)
         
+        # --- NEW: Fetch category to explicitly check for Boss tasks ---
+        task_category = "Unknown"
+        if POOL_PATH.exists():
+            try:
+                with open(POOL_PATH, "r", encoding="utf-8") as f:
+                    pool_config = json.load(f)
+                for task in pool_config.get("Tasks", []):
+                    if task.get("template_id") == template_id:
+                        task_category = task.get("category", "Unknown")
+                        break
+            except Exception:
+                pass
+        
         print(f"\n[+] Processing completion for {difficulty_tier} task...")
 
-        # 1. PARSE AUTOMATIC XP TASK REWARDS
-        if "xp in" in task_desc.lower():
+        # --- NEW & IMPROVED PARSING BLOCK ---
+        # --- FIXED Rule A: Parse standard & total XP tasks (Skill at the end) ---
+        if "xp" in task_desc.lower() and "in" in task_desc.lower():
             try:
-                parts = task_desc.split()
-                xp_amt = int(parts[1].replace(",", ""))
-                skill_target = parts[-1].strip().capitalize()
+                # 1. Grab the XP amount (always between "Gain " and the first " xp")
+                gain_start = task_desc.lower().find("gain ") + 5
+                xp_end = task_desc.lower().find(" xp")
+                xp_str = task_desc[gain_start:xp_end].strip().replace(",", "")
+                xp_amt = int(xp_str)
                 
+                # 2. Grab the skill (always the very last word)
+                skill_target = task_desc.split()[-1].strip().capitalize()
+                
+                # 3. Process database update
                 add_xp(cursor, skill_target, xp_amt)
                 log_action(f"TASK_XP|{skill_target}|{xp_amt}")
 
-                # --- NEW: COMBAT LEVEL TRIGGER ---
+                # Combat Level trigger
                 combat_skills = {"Attack", "Strength", "Defence", "Hitpoints", "Prayer", "Ranged", "Magic"}
                 if skill_target in combat_skills:
                     recalculate_combat_and_guild(cursor)
                     
-            except Exception:
-                print("   [*] Note: Could not auto-parse skill text rewards. Apply XP manually via Lamp if needed.")
+            except Exception as e:
+                print(f"   [!] Error auto-parsing skill text rewards: {e}")
                 
-        # 2. PARSE QUEST AUTOMATION
+        # Rule B: Parse leveling-up tasks (e.g., "Reach level 7 in Smithing")
+        elif "reach level" in task_desc.lower():
+            try:
+                parts = task_desc.lower().split()
+                lvl_idx = parts.index("level") + 1
+                target_lvl = int(parts[lvl_idx])
+                skill_target = parts[-1].strip().capitalize()
+                
+                target_xp = XP_TABLE[target_lvl]
+                
+                cursor.execute("""
+                    UPDATE player_stats 
+                    SET current_level = ?, current_xp = ? 
+                    WHERE skill_name = ?
+                """, (target_lvl, target_xp, skill_target))
+                
+                print(f"   [LEVEL UP] Your {skill_target} level was successfully synced to level {target_lvl} ({target_xp:,} XP)!")
+                log_action(f"TASK_LEVEL_UP|{skill_target}|{target_lvl}")
+
+                combat_skills = {"Attack", "Strength", "Defence", "Hitpoints", "Prayer", "Ranged", "Magic"}
+                if skill_target in combat_skills:
+                    recalculate_combat_and_guild(cursor)
+
+            except Exception as e:
+                print(f"   [*] Note: Could not auto-parse leveling milestones: {e}")
+
+        # Rule C: Parse Quest Automation
         if "complete the quest:" in task_desc.lower():
             try:
                 colon_idx = task_desc.lower().find("complete the quest:") + len("complete the quest:")
@@ -206,6 +252,37 @@ def handle_completions(conn, cursor):
                 complete_quest_by_name(conn, cursor, quest_name_extracted)
             except Exception as e:
                 print(f"   [!] Warning: Failed to auto-trigger quest completion details: {e}")
+
+        # --- Rule D: Parse Achievement Diary Automation ---
+        # Matches template: "Complete the achievement diary: Lumbridge & Draynor (Easy)"
+        if "achievement diary:" in task_desc.lower():
+            try:
+                # Find where the actual diary data begins after the colon
+                colon_idx = task_desc.lower().find("achievement diary:") + len("achievement diary:")
+                diary_content = task_desc[colon_idx:].strip() # e.g., "Lumbridge & Draynor (Easy)"
+                
+                open_bracket = diary_content.find("(")
+                close_bracket = diary_content.find(")")
+                
+                # Extract the exact name string without modifications
+                diary_name_matched = diary_content[:open_bracket].strip() # e.g., "Lumbridge & Draynor"
+                tier_extracted = diary_content[open_bracket+1:close_bracket].strip().capitalize()
+                
+                # Force update target row state
+                cursor.execute("""
+                    UPDATE achievement_diaries 
+                    SET is_completed = 1 
+                    WHERE diary_name = ? AND tier = ?
+                """, (diary_name_matched, tier_extracted))
+                
+                if cursor.rowcount > 0:
+                    print(f"   [DIARY ACHIEVEMENT] Achievement unlocked: {diary_name_matched} ({tier_extracted}) updated to Completed!")
+                    log_action(f"DIARY_COMPLETE|{diary_name_matched}|{tier_extracted}")
+                else:
+                    print(f"   [!] Warning: Could not find a database diary row named '{diary_name_matched}' with tier '{tier_extracted}'")
+                    
+            except Exception as e:
+                print(f"   [*] Note: Could not auto-parse diary milestone updates: {e}")
 
         # 3. CLEAR WORKSLOT AND AWARD REWARDS
         cursor.execute("UPDATE active_slots SET current_task_id = NULL, current_task_description = NULL WHERE slot_type = ?", (slot_type,))
@@ -215,10 +292,65 @@ def handle_completions(conn, cursor):
         conn.commit()
         print(f"[✓] {slot_type} slot task successfully cleared out! Awarded {gold_pay} gold.")
 
-        # --- NEW: SLAYER SLOT PROCESSING FLAG ---
-        # If the closed slot was your Slayer block, immediately prompt for their updated stat line
-        if "slayer assignment" in task_desc.lower():
+        # --- SLAYER OR BOSS COMPLETION FLAG ---
+        if "slayer assignment" in task_desc.lower() or task_category == "Boss":
+            if task_category == "Boss":
+                print("\n[Boss Slain!] Launching Combat Updater to log your boss fight experience drops...")
             complete_slayer_task(conn, cursor)
+            
+        # --- MINIGAME CURRENT XP SYNC ---
+        elif task_category == "Minigame":
+            print(f"\n[Minigame Completed!] '{task_desc}'")
+            print("Hover over your skills in-game and type their current total XP values below.")
+            
+            while True:
+                skill_input = input("Enter a skill to sync XP for (or press Enter to finish): ").strip().capitalize()
+                if not skill_input:
+                    break
+                
+                # Fetch the database current XP to calculate the gain accurately
+                cursor.execute("SELECT current_xp FROM player_stats WHERE skill_name = ?", (skill_input,))
+                skill_row = cursor.fetchone()
+                
+                if not skill_row:
+                    print(f"  [!] '{skill_input}' is not a valid skill name in the database. Try again.")
+                    continue
+                    
+                db_current_xp = skill_row[0]
+                
+                try:
+                    xp_input = input(f"Enter the CURRENT total XP for {skill_input}: ").strip().replace(",", "")
+                    client_current_xp = int(xp_input)
+                    
+                    if client_current_xp < db_current_xp:
+                        print(f"  [!] Entered XP ({client_current_xp:,}) is less than what's in the database ({db_current_xp:,}).")
+                        print("      You cannot lose experience! Please verify the number.")
+                        continue
+                        
+                    # Calculate the delta gain
+                    xp_gained = client_current_xp - db_current_xp
+                    
+                    if xp_gained == 0:
+                        print(f"  [-] No XP change detected for {skill_input}.")
+                        continue
+                        
+                    # Channel the calculated difference into your existing progression routine
+                    add_xp(cursor, skill_input, xp_gained)
+                    log_action(f"MINIGAME_SYNC|{skill_input}|+{xp_gained} (Total: {client_current_xp})")
+                    
+                    # Update virtual totals if a combat skill was altered
+                    combat_skills = {"Attack", "Strength", "Defence", "Hitpoints", "Prayer", "Ranged", "Magic"}
+                    if skill_input in combat_skills:
+                        recalculate_combat_and_guild(cursor)
+                        
+                    print(f"  [✓] Synced! Added +{xp_gained:,} XP to {skill_input} (New Total: {client_current_xp:,}).")
+                except ValueError:
+                    print("  [!] Invalid XP amount. Please enter a valid number.")
+            
+            # Recalculate global virtual tracking metrics (like Total level)
+            recalculate_all_virtual_stats(cursor)
+            conn.commit()
+            print("[✓] Minigame session tracking successfully synced and saved.")
         
     except ValueError:
         print("[!] Processing error or invalid numerical entry selection.")
@@ -313,6 +445,48 @@ def recalculate_combat_and_guild(cursor):
     
     print(f"   [RECALCULATED] Combat Level: {combat_level} | Warriors' Guild Total: {warriors_guild_total}")
 
+def recalculate_all_virtual_stats(cursor):
+    """
+    Calculates and synchronizes all virtual metrics: 'combat', 'warriors_guild_total', 
+    and 'total' (Total Level) directly inside the player_stats table.
+    """
+    # 1. Fetch all skill entries from the database
+    cursor.execute("SELECT skill_name, current_level FROM player_stats")
+    all_stats = cursor.fetchall()
+    
+    # Store them in a case-insensitive dictionary for safe math operations
+    stats = {name.strip().lower(): lvl for name, lvl in all_stats}
+    
+    # Define our virtual skill keys so we don't accidentally sum them into the Total Level
+    virtual_keys = {"combat", "warriors_guild_total", "total"}
+    
+    # 2. Calculate Total Level (Sum of all real/standard skills)
+    total_level = sum(lvl for name, lvl in stats.items() if name not in virtual_keys)
+    
+    # 3. Official OSRS Combat Level Formula (safely defaulting missing skills to 1)
+    defence = stats.get("defence", 1)
+    hitpoints = stats.get("hitpoints", 1)
+    prayer = stats.get("prayer", 1)
+    attack = stats.get("attack", 1)
+    strength = stats.get("strength", 1)
+    ranged = stats.get("ranged", 1)
+    magic = stats.get("magic", 1)
+    
+    base = 0.25 * (defence + hitpoints + (prayer // 2))
+    melee = 0.325 * (attack + strength)
+    ranged_calc = 0.325 * (ranged * 1.5 // 1)
+    magic_calc = 0.325 * (magic * 1.5 // 1)
+    
+    combat_level = int(base + max(melee, ranged_calc, magic_calc))
+    
+    # 4. Warriors' Guild Total Formula (Attack + Strength)
+    warriors_guild_total = attack + strength
+
+    # 5. Push updates to the lowercase rows in the database
+    cursor.execute("UPDATE player_stats SET current_level = ? WHERE skill_name = 'Total'", (total_level,))
+    cursor.execute("UPDATE player_stats SET current_level = ? WHERE skill_name = 'Combat'", (combat_level,))
+    cursor.execute("UPDATE player_stats SET current_level = ? WHERE skill_name = 'Warriors_guild_total'", (warriors_guild_total,))
+
 def complete_slayer_task(conn, cursor):
     """Prompts the user for updated combat statuses, saves them, and forces a profile recalculation."""
     print("\n==============================================")
@@ -345,13 +519,16 @@ def complete_slayer_task(conn, cursor):
     # Push entries back down to your SQL profile
     print("\n   [+] Updating combat records...")
     for skill_name, current_level in updated_profiles.items():
-        # Standardize matching cases
+        # Standardise matching cases
         skill_clean = skill_name.strip().capitalize()
+
+        target_xp = XP_TABLE[current_level]
+
         cursor.execute("""
             UPDATE player_stats 
-            SET current_level = ? 
+            SET current_level = ?, current_xp = ?
             WHERE skill_name = ?
-        """, (current_level, skill_clean))
+        """, (current_level, target_xp, skill_clean))
 
     # Trigger automatic virtual skill evaluations!
     recalculate_combat_and_guild(cursor)

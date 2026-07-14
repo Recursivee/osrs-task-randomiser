@@ -28,8 +28,8 @@
         {"name": "Construction", "level": 1, "experience": 0, "unlocked": false },
         {"name": "Hunting", "level": 1, "experience": 0, "unlocked": true },
         {"name": "Sailing", "level": 1, "experience": 0, "unlocked": false },
-        {"name": "combat", "level": 3, "experience": 0, "unlocked": false },
-        {"name": "warriors_guild_total", "level": 2, "experience": 0, "unlocked": false },
-        {"name": "total", "level": 29, "experience": 0, "unlocked": false }
+        {"name": "Combat", "level": 3, "experience": 0, "unlocked": false },
+        {"name": "Warriors_guild_total", "level": 2, "experience": 0, "unlocked": false },
+        {"name": "Total", "level": 29, "experience": 0, "unlocked": false }
     ]
 }
