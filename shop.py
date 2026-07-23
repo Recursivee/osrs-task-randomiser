@@ -165,3 +165,120 @@ def _browse_and_buy(conn, cursor, content_type, cost, current_gold):
 
     except ValueError:
         print("[!] Input error: Invalid transaction sequence.")
+
+def get_available_shop_items(cursor):
+    """
+    Queries unlockable_shop using the schema:
+    [id, name, content_type, key_cost, parent_quest_id, region_dependency, is_unlocked]
+    
+    Filters items based on:
+    1. Unlocked status
+    2. Region dependency
+    3. Parent quest completion (from quests table via parent_quest_id)
+    4. Skill level requirements (from skill_requirements table)
+    """
+    costs = _get_shop_costs()
+
+    # Query using exact column names with a LEFT JOIN on quests for quest status
+    cursor.execute("""
+        SELECT 
+            us.id, 
+            us.name, 
+            us.content_type, 
+            us.key_cost, 
+            us.parent_quest_id, 
+            q.status AS quest_status,
+            us.region_dependency, 
+            us.is_unlocked
+        FROM unlockable_shop us
+        LEFT JOIN quests q ON us.parent_quest_id = q.quest_id
+        WHERE UPPER(us.name) != 'UNKNOWN'
+        ORDER BY us.is_unlocked ASC, us.name ASC
+    """)
+    rows = cursor.fetchall()
+
+    available_items = []
+
+    for row in rows:
+        # Tuple / sqlite3.Row safe access
+        shop_id = row["id"] if isinstance(row, sqlite3.Row) else row[0]
+        name = row["name"] if isinstance(row, sqlite3.Row) else row[1]
+        content_type = row["content_type"] if isinstance(row, sqlite3.Row) else row[2]
+        db_key_cost = row["key_cost"] if isinstance(row, sqlite3.Row) else row[3]
+        parent_quest_id = row["parent_quest_id"] if isinstance(row, sqlite3.Row) else row[4]
+        quest_status = row["quest_status"] if isinstance(row, sqlite3.Row) else row[5]
+        region_dep = row["region_dependency"] if isinstance(row, sqlite3.Row) else row[6]
+        is_unlocked = row["is_unlocked"] if isinstance(row, sqlite3.Row) else row[7]
+
+        # Use db_key_cost first; fallback to _get_shop_costs() if key_cost is NULL/None
+        if db_key_cost is not None:
+            cost = float(db_key_cost)
+        else:
+            type_key = content_type.title() if content_type else "Region"
+            cost = float(costs.get(type_key, 10))
+
+        # 1. ALREADY UNLOCKED
+        if is_unlocked == 1:
+            available_items.append({
+                "id": shop_id,
+                "name": name,
+                "content_type": content_type,
+                "cost": cost,
+                "is_unlocked": True
+            })
+            continue
+
+        # 2. REGION LOCK GATEKEEPER
+        if content_type != "REGION" and region_dep:
+            if region_dep.strip().upper() != "MISTHALIN":
+                cursor.execute("""
+                    SELECT is_unlocked FROM unlockable_shop 
+                    WHERE UPPER(name) = UPPER(?) AND content_type = 'REGION'
+                """, (region_dep.strip(),))
+                reg_row = cursor.fetchone()
+
+                if not reg_row:
+                    continue
+                reg_status = reg_row["is_unlocked"] if isinstance(reg_row, sqlite3.Row) else reg_row[0]
+                if reg_status == 0:
+                    continue
+
+        # 3. QUEST GATEKEEPER (using parent_quest_id)
+        if parent_quest_id is not None and parent_quest_id != 0:
+            # If parent quest exists and isn't completed (status != 2), hide item
+            if quest_status is None or quest_status != 2:
+                continue
+
+        # 4. SKILL LEVEL GATEKEEPER
+        cursor.execute("""
+            SELECT skill_name, level_required FROM skill_requirements 
+            WHERE target_type = 'SHOP_ITEM' AND target_id = ?
+        """, (shop_id,))
+        
+        skills_pass = True
+        for s_row in cursor.fetchall():
+            s_name = s_row["skill_name"] if isinstance(s_row, sqlite3.Row) else s_row[0]
+            s_level = s_row["level_required"] if isinstance(s_row, sqlite3.Row) else s_row[1]
+            s_name_clean = s_name.strip().capitalize()
+
+            cursor.execute("SELECT current_level FROM player_stats WHERE skill_name = ?", (s_name_clean,))
+            lvl_row = cursor.fetchone()
+            current_lvl = (lvl_row["current_level"] if isinstance(lvl_row, sqlite3.Row) else lvl_row[0]) if lvl_row else 1
+            
+            if current_lvl < s_level:
+                skills_pass = False
+                break
+
+        if not skills_pass:
+            continue
+
+        # Item meets all prerequisites!
+        available_items.append({
+            "id": shop_id,
+            "name": name,
+            "content_type": content_type,
+            "cost": cost,
+            "is_unlocked": False
+        })
+
+    return available_items

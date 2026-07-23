@@ -170,7 +170,7 @@ def gather_eligible_content(cursor, player_stats):
 
     return pools
 
-def generate_three_choices(conn, cursor):
+def generate_three_choices(conn, cursor, slot_type="ACTIVE"):
     print("\n[Engine] Gathering data configurations...")
     player_stats = get_current_player_stats(cursor)
     content_pools = gather_eligible_content(cursor, player_stats)
@@ -187,7 +187,6 @@ def generate_three_choices(conn, cursor):
     choices_generated = []
     attempts = 0
 
-    slot_type = input("Are you rolling for an 'ACTIVE' or 'AFK' slot? ").strip().upper()
     if slot_type not in ["ACTIVE", "AFK"]:
         slot_type = "ACTIVE"
 
@@ -198,7 +197,7 @@ def generate_three_choices(conn, cursor):
         rolled_category = random.choices(categories, weights=weights, k=1)[0]
         
         # Step B: Ensure the content pool for this category isn't empty
-        if not content_pools[rolled_category]:
+        if not content_pools.get(rolled_category):
             continue
 
         # Step C: Filter and pick a random template matching category and slot type
@@ -237,6 +236,8 @@ def generate_three_choices(conn, cursor):
 
         if rolled_category == "Skill":
             available_skills = content_pools["Skill"]
+            if not available_skills:
+                continue
             
             # Dynamic skill weighting based on level
             skill_weights = []
@@ -246,7 +247,7 @@ def generate_three_choices(conn, cursor):
                 skill_weights.append(weight)
             
             rolled_skill = random.choices(available_skills, weights=skill_weights, k=1)[0]
-            current_level = player_stats[rolled_skill]
+            current_level = player_stats.get(rolled_skill, 1)
             meta_target = rolled_skill
 
             if template.get("template_id") == 12 and current_level < 50:
@@ -260,25 +261,23 @@ def generate_three_choices(conn, cursor):
                 meta_value = rolled_amount
                 task_text = description.format(amount=rolled_amount, skill=rolled_skill)
             
-            # --- FIXED: Catch any template expecting 'new_xp' ---
+            # Catch any template expecting 'new_xp'
             elif "reaching" in description.lower() or "total" in description.lower() or "new_xp" in description:
-                # Query the database for current absolute XP
                 cursor.execute("SELECT current_xp FROM player_stats WHERE skill_name = ?", (rolled_skill,))
                 skill_row = cursor.fetchone()
                 current_xp = skill_row[0] if skill_row else 0
                 
-                # Calculate the target XP goal
                 new_xp = current_xp + rolled_amount
                 meta_value = new_xp
                 
-                # Safely format passing all three required variables
                 task_text = description.format(amount=rolled_amount, skill=rolled_skill, new_xp=new_xp)
-                
+            
             else:
-                # Fallback standard XP gain format
                 task_text = description.format(amount=rolled_amount, skill=rolled_skill)
         
         elif rolled_category in ["Quest", "Boss", "Minigame", "Raid", "Achievement"]:
+            if not content_pools.get(rolled_category):
+                continue
             specific_content = random.choice(content_pools[rolled_category])
             meta_target = specific_content
             task_text = description.format(content_name=specific_content, amount=rolled_amount)
@@ -297,32 +296,7 @@ def generate_three_choices(conn, cursor):
 
     if len(choices_generated) < 3:
         print("[!] Warning: Content pool too restrictive to roll choices.")
-        return
+        return []
 
-    print(f"\n=== GENERATED 3 OPTIONS FOR YOUR {slot_type} TASK SLOT ===")
-    for idx, choice in enumerate(choices_generated, 1):
-        print(f"  {idx}. {choice['text']}")
-    print("=========================================================")
-
-    try:
-        user_pick = int(input("Select which task to activate (1-3): ").strip())
-        if user_pick in [1, 2, 3]:
-            picked = choices_generated[user_pick - 1]
-            
-            cursor.execute("DELETE FROM active_slots WHERE slot_type = ?", (slot_type,))
-            cursor.execute("""
-                INSERT INTO active_slots (
-                    slot_type, choice_1_id, choice_2_id, choice_3_id, 
-                    choice_1_description, choice_2_description, choice_3_description,
-                    current_task_id, current_task_description
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                slot_type, 
-                choices_generated[0]["template_id"], choices_generated[1]["template_id"], choices_generated[2]["template_id"],
-                choices_generated[0]["text"], choices_generated[1]["text"], choices_generated[2]["text"],
-                picked["template_id"], picked["text"]
-            ))
-            conn.commit()
-            print(f"\n[+] Task Accepted! Stored inside database active slots tracking system.")
-    except ValueError:
-        print("[!] Input canceled.")
+    # Return the dictionary objects directly to Flask
+    return choices_generated

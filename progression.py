@@ -10,6 +10,167 @@ HISTORY_LOG_PATH = Path(__file__).resolve().parent / "history.log"
 POOL_PATH = CONFIG_DIR / "tasks_pool.json"
 META_PATH = CONFIG_DIR / "meta_data.json" 
 
+
+def complete_task_programmatic(conn, cursor, slot_type="ACTIVE"):
+    """
+    Programmatic entry point for Flask API completions.
+    Evaluates active task, updates database, awards gold, clears slot,
+    and flags whether the frontend should display a Combat/Slayer update modal.
+    """
+    # 1. Fetch active task details
+    cursor.execute(
+        "SELECT current_task_description, current_task_id FROM active_slots WHERE slot_type = ?", 
+        (slot_type,)
+    )
+    row = cursor.fetchone()
+    
+    if not row or not row[0]:
+        return {"success": False, "message": f"No active task found in {slot_type} slot."}
+
+    task_desc, template_id = row[0], row[1]
+
+    # 2. Determine reward amount and category
+    difficulty_tier = _get_task_difficulty_tier(template_id)
+    gold_pay = _get_gold_reward_for_tier(difficulty_tier)
+
+    task_category = "Unknown"
+    if POOL_PATH.exists():
+        try:
+            with open(POOL_PATH, "r", encoding="utf-8") as f:
+                pool_config = json.load(f)
+            for task in pool_config.get("Tasks", []):
+                if task.get("template_id") == template_id:
+                    task_category = task.get("category", "Unknown")
+                    break
+        except Exception:
+            pass
+
+    # 3. Parse and apply automatic rewards (XP, Levels, Quests, Diaries)
+    if "xp" in task_desc.lower() and "in" in task_desc.lower():
+        try:
+            gain_start = task_desc.lower().find("gain ") + 5
+            xp_end = task_desc.lower().find(" xp")
+            xp_str = task_desc[gain_start:xp_end].strip().replace(",", "")
+            xp_amt = int(xp_str)
+            skill_target = task_desc.split()[-1].strip().capitalize()
+
+            add_xp(cursor, skill_target, xp_amt)
+            log_action(f"TASK_XP|{skill_target}|{xp_amt}")
+        except Exception as e:
+            print(f" [!] XP Parsing error: {e}")
+
+    elif "reach level" in task_desc.lower():
+        try:
+            parts = task_desc.lower().split()
+            lvl_idx = parts.index("level") + 1
+            target_lvl = int(parts[lvl_idx])
+            skill_target = parts[-1].strip().capitalize()
+            target_xp = XP_TABLE[target_lvl]
+
+            cursor.execute("""
+                UPDATE player_stats 
+                SET current_level = ?, current_xp = ? 
+                WHERE skill_name = ?
+            """, (target_lvl, target_xp, skill_target))
+            log_action(f"TASK_LEVEL_UP|{skill_target}|{target_lvl}")
+        except Exception as e:
+            print(f" [!] Level milestone error: {e}")
+
+    if "complete the quest:" in task_desc.lower():
+        try:
+            colon_idx = task_desc.lower().find("complete the quest:") + len("complete the quest:")
+            quest_name = task_desc[colon_idx:].strip()
+            complete_quest_by_name(conn, cursor, quest_name)
+        except Exception as e:
+            print(f" [!] Quest trigger error: {e}")
+
+    if "achievement diary:" in task_desc.lower():
+        try:
+            colon_idx = task_desc.lower().find("achievement diary:") + len("achievement diary:")
+            diary_content = task_desc[colon_idx:].strip()
+            open_bracket = diary_content.find("(")
+            close_bracket = diary_content.find(")")
+            diary_name = diary_content[:open_bracket].strip()
+            tier_extracted = diary_content[open_bracket+1:close_bracket].strip().capitalize()
+
+            cursor.execute("""
+                UPDATE achievement_diaries 
+                SET is_completed = 1 
+                WHERE diary_name = ? AND tier = ?
+            """, (diary_name, tier_extracted))
+            log_action(f"DIARY_COMPLETE|{diary_name}|{tier_extracted}")
+        except Exception as e:
+            print(f" [!] Diary trigger error: {e}")
+
+    # 4. Clear slot and award gold
+    cursor.execute("""
+        UPDATE active_slots 
+        SET current_task_id = NULL, current_task_description = NULL 
+        WHERE slot_type = ?
+    """, (slot_type,))
+
+    award_gold(cursor, gold_pay)
+    log_action(f"TASK_COMPLETE|{task_desc}|{gold_pay}")
+    
+    # Recalculate virtual stats and commit changes
+    recalculate_all_virtual_stats(cursor)
+    conn.commit()
+
+    # 5. Check if Slayer or Boss requires user input modal
+    is_slayer = "slayer" in task_desc.lower() or task_category in ("Slayer", "Boss")
+
+    if is_slayer:
+        tracked_skills = ["Slayer", "Attack", "Strength", "Defence", "Hitpoints", "Ranged", "Magic", "Prayer"]
+        current_levels = {}
+        for skill in tracked_skills:
+            cursor.execute("SELECT current_level FROM player_stats WHERE LOWER(skill_name) = LOWER(?)", (skill,))
+            r = cursor.fetchone()
+            current_levels[skill] = (r["current_level"] if isinstance(r, sqlite3.Row) else r[0]) if r else 1
+
+        return {
+            "success": True,
+            "requires_input": True,
+            "input_type": "slayer_combat",
+            "current_levels": current_levels,
+            "message": f"Task cleared! Awarded {gold_pay} Gold. Please update your combat levels."
+        }
+
+    return {
+        "success": True,
+        "requires_input": False,
+        "message": f"Task completed successfully! Awarded {gold_pay} Gold."
+    }
+
+
+def update_slayer_combat_programmatic(conn, cursor, skill_levels_dict):
+    """
+    Programmatic entry point for Flask API.
+    Accepts a dictionary of skill levels from web UI: {'Slayer': 75, 'Attack': 80, ...}
+    Updates player_stats, recalculates combat, and commits.
+    """
+    for skill_name, current_level in skill_levels_dict.items():
+        if current_level is None:
+            continue
+            
+        skill_clean = skill_name.strip().capitalize()
+        try:
+            current_level = int(current_level)
+            if 1 <= current_level <= 99:
+                target_xp = XP_TABLE[current_level]
+                cursor.execute("""
+                    UPDATE player_stats 
+                    SET current_level = ?, current_xp = ?
+                    WHERE skill_name = ?
+                """, (current_level, target_xp, skill_clean))
+        except (ValueError, TypeError):
+            continue
+
+    recalculate_combat_and_guild(cursor)
+    recalculate_all_virtual_stats(cursor)
+    conn.commit()
+    return True
+
+
 # --- 1. AUTHENTIC OSRS XP TABLE GENERATION ---
 def _generate_xp_table():
     """Generates an exact OSRS cumulative experience table for levels 1-100."""
@@ -549,3 +710,36 @@ def use_lamp(conn, cursor):
         print("[✓] Experience lamp applied.")
     except ValueError:
         print("[!] Error: Invalid numeric XP amount entered.")
+
+def use_lamp_programmatic(conn, cursor, skill_name, xp_amt):
+    """Applies an XP lamp to any target skill (locked or unlocked)."""
+    try:
+        xp_amt = int(xp_amt)
+        skill_choice = skill_name.strip().capitalize()
+        
+        # Verify the skill exists in player_stats (regardless of locked status)
+        cursor.execute("SELECT skill_name, is_unlocked FROM player_stats WHERE LOWER(skill_name) = LOWER(?)", (skill_choice,))
+        row = cursor.fetchone()
+        
+        if not row:
+            return {"success": False, "message": f"Skill '{skill_choice}' not found."}
+
+        # Add XP directly (will bank XP even if skill is locked)
+        add_xp(cursor, skill_choice, xp_amt)
+        log_action(f"LAMP|{skill_choice}|{xp_amt}")
+        
+        # Recalculate virtual stats/levels
+        recalculate_all_virtual_stats(cursor)
+        conn.commit()
+        
+        is_unlocked = row[1] == 1 or row[1] is True
+        status_msg = "applied" if is_unlocked else "banked for future unlock"
+        
+        return {
+            "success": True, 
+            "message": f"Successfully {status_msg} {xp_amt:,} XP for {skill_choice}!"
+        }
+    except ValueError:
+        return {"success": False, "message": "Invalid numeric XP amount."}
+    except Exception as e:
+        return {"success": False, "message": f"Error applying lamp: {str(e)}"}

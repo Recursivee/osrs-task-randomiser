@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSRS Task Generator Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #ff9800;
+            --text-color: #e0e0e0;
+            --btn-green: #2e7d32;
+            --afk-color: #0288d1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .metrics-bar {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .metric-badge {
+            background: #2a2a2a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .slots-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .task-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 140px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .btn-complete {
+            background-color: var(--btn-green);
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .btn-afk {
+            background-color: var(--afk-color);
+            color: #fff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 10px;
+        }
+
+        .stat-box {
+            background: #262626;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .stat-box .level {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .stat-box.locked {
+            background: #1c1c1c;
+            opacity: 0.45;
+            border: 1px dashed #555;
+            color: #888;
+        }
+
+        .stat-box.locked .level {
+            color: #888;
+        }
+
+        .locked-tag {
+            color: #ff5252;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .choice-card {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .shop-item {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .shop-item.unlocked {
+            opacity: 0.5;
+            border-color: #2e7d32;
+            background: #1a261a;
+        }
+
+        .shop-type {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .shop-cost {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin: 6px 0;
+        }
+
+        .btn-buy {
+            background-color: #ffd700;
+            color: #000;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .btn-buy:disabled {
+            background-color: #555;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        /* --- MODAL STYLES --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #1e1e1e;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 24px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .modal-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .modal-field label {
+            font-size: 0.85rem;
+            color: #bbb;
+        }
+
+        .modal-field input {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>OSRS Task Generator</h1>
+        <div class="metrics-bar">
+            <div class="metric-badge">Gold: <span id="gold-val" style="color: #ffd700;">0.0</span></div>
+            <div class="metric-badge">Quest Points: <span id="qp-val" style="color: #00e676;">0</span></div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div>
+            <div class="slots-grid">
+                <div class="card task-card">
+                    <div>
+                        <h2 style="margin-top: 0; color: var(--accent-color);">Active Slot</h2>
+                        <p id="active-task-desc" style="font-size: 1.05rem;">Loading active task...</p>
+                    </div>
+                    <button class="btn btn-complete" id="complete-active-btn" onclick="completeTask('ACTIVE')">Complete Active Task</button>
+                </div>
+
+                <div class="card task-card">
+                    <div>
+                        <h2 style="margin-top: 0; color: var(--afk-color);">AFK Slot</h2>
+                        <p id="afk-task-desc" style="font-size: 1.05rem;">Loading AFK task...</p>
+                    </div>
+                    <button class="btn btn-complete" id="complete-afk-btn" onclick="completeTask('AFK')">Complete AFK Task</button>
+                </div>
+            </div>
+
+            <div class="slots-grid">
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--accent-color);">Active Task Roller</h3>
+                    <button class="btn" onclick="rollTasks('ACTIVE')">Roll 3 Active Tasks</button>
+                    <div id="choices-container-ACTIVE"></div>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--afk-color);">AFK Task Roller</h3>
+                    <button class="btn btn-afk" onclick="rollTasks('AFK')">Roll 3 AFK Tasks</button>
+                    <div id="choices-container-AFK"></div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="margin: 0; color: #ffd700;">Unlock Shop</h2>
+                </div>
+                <div id="shop-container" class="shop-grid"></div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card">
+                <h2>Skills Overview</h2>
+                <div class="stats-grid" id="stats-container"></div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <h2 style="margin-top: 0; color: #ffeb3b;"> XP Lamp</h2>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div>
+                        <label style="font-size: 0.8rem; color: #ccc;">Target Skill</label>
+                        <select id="lamp-skill-select" style="width: 100%; padding: 8px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; margin-top: 4px;">
+                            <option value="">Loading skills...</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="font-size: 0.8rem; color: #ccc;">XP Amount</label>
+                        <input type="number" id="lamp-xp-input" placeholder="e.g. 10000" min="1" style="width: 95%; padding: 8px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; margin-top: 4px;">
+                    </div>
+
+                    <button class="btn" style="background-color: #ffeb3b; color: #000; margin-top: 6px;" onclick="useXpLamp()">Rub Lamp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="slayer-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 style="margin-top:0; color: var(--accent-color);"> Update Combat & Slayer Stats</h2>
+            <p style="font-size: 0.9rem; color: #bbb;">Update your current levels to recalculate Virtual Stats and Combat Level:</p>
+            
+            <div class="modal-grid">
+                <div class="modal-field"><label>Slayer</label><input type="number" id="input-slayer" min="1" max="99"></div>
+                <div class="modal-field"><label>Hitpoints</label><input type="number" id="input-hitpoints" min="1" max="99"></div>
+                <div class="modal-field"><label>Attack</label><input type="number" id="input-attack" min="1" max="99"></div>
+                <div class="modal-field"><label>Strength</label><input type="number" id="input-strength" min="1" max="99"></div>
+                <div class="modal-field"><label>Defence</label><input type="number" id="input-defence" min="1" max="99"></div>
+                <div class="modal-field"><label>Ranged</label><input type="number" id="input-ranged" min="1" max="99"></div>
+                <div class="modal-field"><label>Magic</label><input type="number" id="input-magic" min="1" max="99"></div>
+                <div class="modal-field"><label>Prayer</label><input type="number" id="input-prayer" min="1" max="99"></div>
+            </div>
+
+            <button class="btn btn-complete" style="margin-top: 10px;" onclick="submitSlayerCombatStats()">Save Stats & Update</button>
+            <button class="btn" style="margin-top: 8px; background: #555; color: #fff;" onclick="closeSlayerCombatModal()">Skip / Close</button>
+        </div>
+    </div>
+
+    <script>
+        async function loadDashboardData() {
+            try {
+                // 1. Fetch the dashboard data FIRST
+                const res = await fetch('/api/dashboard-data');
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                
+                // 2. Define 'data'
+                const data = await res.json();
+                console.log("Dashboard data loaded successfully:", data);
+
+                // 3. Update Gold & Quest Points
+                if (data.metadata) {
+                    const goldEl = document.getElementById('gold-val');
+                    const qpEl = document.getElementById('qp-val');
+                    if (goldEl) goldEl.innerText = Number(data.metadata.gold || 0).toFixed(2);
+                    if (qpEl) qpEl.innerText = data.metadata.quest_points || 0;
+                }
+
+                // --- 4. UPDATE ACTIVE & AFK TASK DESCRIPTIONS (THIS WAS MISSING!) ---
+                const activeDesc = document.getElementById('active-task-desc');
+                const afkDesc = document.getElementById('afk-task-desc');
+
+                // Reset to default empty text first
+                if (activeDesc) activeDesc.innerText = "None (Roll or select a task)";
+                if (afkDesc) afkDesc.innerText = "None (Roll or select a task)";
+
+                if (Array.isArray(data.active_slots)) {
+                    data.active_slots.forEach(slot => {
+                        const slotType = (slot.slot_type || "").toUpperCase();
+                        const taskDesc = slot.current_task_description || "None";
+
+                        if (slotType === 'ACTIVE' && activeDesc) {
+                            activeDesc.innerText = taskDesc;
+                        } else if (slotType === 'AFK' && afkDesc) {
+                            afkDesc.innerText = taskDesc;
+                        }
+                    });
+                }
+
+                // 5. Update Stats Container Grid
+                const statsContainer = document.getElementById('stats-container');
+                if (statsContainer) {
+                    statsContainer.innerHTML = '';
+                }
+
+                // 6. Populate Stats Grid & XP Lamp Select Dropdown
+                const lampSelect = document.getElementById('lamp-skill-select');
+                let currentSelection = "";
+
+                if (lampSelect) {
+                    currentSelection = lampSelect.value;
+                    lampSelect.innerHTML = '<option value="">-- Select Skill --</option>';
+                }
+
+                if (Array.isArray(data.stats)) {
+                    data.stats.forEach(stat => {
+                        const skillName = stat.skill_name || stat.name;
+                        const isUnlocked = stat.is_unlocked === 1 || stat.is_unlocked === true;
+                        const currentXp = Number(stat.current_xp || stat.xp || 0).toLocaleString();
+
+                        // Build Stat Card Box
+                        if (statsContainer) {
+                            const box = document.createElement('div');
+                            box.className = isUnlocked ? 'stat-box' : 'stat-box locked';
+                            box.innerHTML = `<strong>${skillName}</strong><br><span class="level">Lvl ${stat.current_level}</span><br><span class="xp-val" style="font-size: 0.75rem; color: #aaa;">${currentXp} XP</span>` + 
+                                            (isUnlocked ? '' : ' <span class="locked-tag">[Locked]</span>');
+                            statsContainer.appendChild(box);
+                        }
+
+                        // Add Option to Lamp Select Box
+                        if (lampSelect) {
+                            const opt = document.createElement('option');
+                            opt.value = skillName;
+                            opt.textContent = isUnlocked ? skillName : `${skillName} [Locked]`;
+                            if (skillName === currentSelection) {
+                                opt.selected = true;
+                            }
+                            lampSelect.appendChild(opt);
+                        }
+                    });
+                }
+
+            } catch (err) {
+                console.error("Error in loadDashboardData:", err);
+            }
+        }
+
+        async function rollTasks(slotType) {
+            const container = document.getElementById(`choices-container-${slotType}`);
+            container.innerHTML = `<p style="color: #888; font-size: 0.9rem;">Rolling tasks...</p>`;
+
+            try {
+                const res = await fetch('/api/roll-tasks', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slot_type: slotType })
+                });
+                const data = await res.json();
+
+                if (data.status === 'success' && data.choices && data.choices.length > 0) {
+                    container.innerHTML = '';
+
+                    data.choices.forEach((choice, index) => {
+                        const taskText = typeof choice === 'object' ? (choice.text || choice.description) : choice;
+                        const safeText = taskText.replace(/'/g, "\\'");
+
+                        const card = document.createElement('div');
+                        card.className = 'choice-card';
+
+                        const btnClass = slotType === 'AFK' ? 'btn btn-afk' : 'btn';
+
+                        card.innerHTML = `
+                            <span style="font-size: 0.9rem;"><strong>${index + 1}.</strong> ${taskText}</span>
+                            <button class="${btnClass}" style="padding: 6px; font-size: 0.8rem;" onclick="selectTask('${safeText}', '${slotType}')">
+                                Assign to ${slotType}
+                            </button>
+                        `;
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = `<p style="color: #ff5252; font-size: 0.9rem;">${data.message || 'No choices available.'}</p>`;
+                }
+            } catch (err) {
+                container.innerHTML = `<p style="color: #ff5252; font-size: 0.9rem;">Connection error.</p>`;
+            }
+        }
+
+        async function selectTask(description, slotType) {
+            const res = await fetch('/api/select-task', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ description: description, slot_type: slotType })
+            });
+
+            const data = await res.json();
+            if (data.status === 'success') {
+                document.getElementById(`choices-container-${slotType}`).innerHTML = '';
+                loadDashboardData();
+            } else {
+                alert("Failed to select task: " + data.message);
+            }
+        }
+
+        // --- TASK COMPLETION AND MODAL LOGIC ---
+        async function completeTask(slotType) {
+            try {
+                const response = await fetch('/api/complete_task', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slot_type: slotType })
+                });
+                
+                const data = await response.json();
+
+                if (data.requires_input && data.input_type === 'slayer_combat') {
+                    openSlayerCombatModal(data.current_levels || {});
+                } else {
+                    alert(data.message || "Task completed!");
+                    loadDashboardData();
+                }
+            } catch (err) {
+                console.error("Task completion failed:", err);
+                alert("Error completing task.");
+            }
+        }
+
+        function openSlayerCombatModal(levels) {
+            const skills = ['slayer', 'attack', 'strength', 'defence', 'hitpoints', 'ranged', 'magic', 'prayer'];
+            skills.forEach(s => {
+                const input = document.getElementById(`input-${s}`);
+                if (input) {
+                    // Pre-fill with current levels from DB or default to 1
+                    const key = Object.keys(levels).find(k => k.toLowerCase() === s);
+                    input.value = key ? levels[key] : 1;
+                }
+            });
+            document.getElementById('slayer-modal').style.display = 'flex';
+        }
+
+        function closeSlayerCombatModal() {
+            document.getElementById('slayer-modal').style.display = 'none';
+            loadDashboardData();
+        }
+
+        async function submitSlayerCombatStats() {
+            const updatedLevels = {
+                Slayer: parseInt(document.getElementById('input-slayer').value) || 1,
+                Attack: parseInt(document.getElementById('input-attack').value) || 1,
+                Strength: parseInt(document.getElementById('input-strength').value) || 1,
+                Defence: parseInt(document.getElementById('input-defence').value) || 1,
+                Hitpoints: parseInt(document.getElementById('input-hitpoints').value) || 1,
+                Ranged: parseInt(document.getElementById('input-ranged').value) || 1,
+                Magic: parseInt(document.getElementById('input-magic').value) || 1,
+                Prayer: parseInt(document.getElementById('input-prayer').value) || 1
+            };
+
+            try {
+                const response = await fetch('/api/submit_slayer_combat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ levels: updatedLevels })
+                });
+
+                const result = await response.json();
+                alert(result.message || "Stats saved successfully!");
+                closeSlayerCombatModal();
+            } catch (err) {
+                console.error("Failed to submit stats:", err);
+                alert("Error submitting stats to server.");
+            }
+        }
+
+        async function loadShopData() {
+            try {
+                const res = await fetch('/api/shop-items');
+                const data = await res.json();
+                const container = document.getElementById('shop-container');
+                container.innerHTML = '';
+
+                if (!data.items || data.items.length === 0) {
+                    container.innerHTML = '<p style="color: #888;">No items found in shop database.</p>';
+                    return;
+                }
+
+                const currentGold = parseFloat(document.getElementById('gold-val').innerText) || 0;
+
+                data.items.forEach(item => {
+                    const card = document.createElement('div');
+                    const isUnlocked = item.is_unlocked === 1 || item.is_unlocked === true;
+
+                    card.className = `shop-item ${isUnlocked ? 'unlocked' : ''}`;
+
+                    if (isUnlocked) {
+                        card.innerHTML = `
+                            <div>
+                                <span class="shop-type">${item.content_type || 'UNLOCK'}</span>
+                                <div style="font-weight: bold; margin-top: 4px;">${item.name}</div>
+                                <div class="shop-cost" style="color: #00e676;">Unlocked</div>
+                            </div>
+                            <button class="btn btn-buy" disabled>Purchased</button>
+                        `;
+                    } else {
+                        const canAfford = currentGold >= item.cost;
+                        card.innerHTML = `
+                            <div>
+                                <span class="shop-type">${item.content_type || 'UNLOCK'}</span>
+                                <div style="font-weight: bold; margin-top: 4px;">${item.name}</div>
+                                <div class="shop-cost"> ${item.cost} Gold</div>
+                            </div>
+                            <button class="btn btn-buy" 
+                                    ${canAfford ? '' : 'disabled'} 
+                                    onclick="buyItem(${item.id}, '${item.name.replace(/'/g, "\\'")}')">
+                                ${canAfford ? 'Buy Unlock' : 'Need More Gold'}
+                            </button>
+                        `;
+                    }
+
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Failed to load shop items:", err);
+            }
+        }
+
+        async function buyItem(itemId, itemName) {
+            if (!confirm(`Are you sure you want to unlock "${itemName}"?`)) return;
+
+            try {
+                const res = await fetch('/api/buy-item', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ item_id: itemId })
+                });
+
+                const data = await res.json();
+
+                if (data.status === 'success') {
+                    await loadDashboardData();
+                    await loadShopData();
+                } else {
+                    alert("Purchase failed: " + data.message);
+                }
+            } catch (err) {
+                console.error("Purchase request error:", err);
+                alert("Failed to connect to server when purchasing item.");
+            }
+        }
+
+        async function useXpLamp() {
+            const skillSelect = document.getElementById('lamp-skill-select');
+            const xpInput = document.getElementById('lamp-xp-input');
+
+            const skillName = skillSelect.value;
+            const xpAmount = parseInt(xpInput.value);
+
+            if (!skillName) {
+                alert("Please select a target skill.");
+                return;
+            }
+
+            if (!xpAmount || xpAmount <= 0) {
+                alert("Please enter a valid positive XP amount.");
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/use-lamp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        skill_name: skillName,
+                        xp_amount: xpAmount
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    alert(data.message);
+                    xpInput.value = ''; // Reset input field
+                    await loadDashboardData(); // Refresh UI stats
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (err) {
+                console.error("Failed to use XP Lamp:", err);
+                alert("Failed to submit XP Lamp request.");
+            }
+        }
+
+        // Initialize dashboard and shop on load
+        loadDashboardData();
+        loadShopData();
+    </script>
+</body>
+</html>
