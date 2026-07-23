@@ -1,3 +1,6 @@
+## Interactive Flask Preview
+![Flask](/Images/flask.jpg)
+
 # OSRS Task Generator & Dashboard
 
 An interactive task locked Old School RuneScape challenge generator and progression manager built via python scripts, sqlite and flask (html, css, javascript). Created with AI assistance. 
