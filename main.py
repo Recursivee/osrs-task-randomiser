@@ -53,6 +53,21 @@ def view_character_sheet(conn, cursor):
     cursor.execute("SELECT name FROM unlockable_shop WHERE content_type = 'REGION' AND is_unlocked = 1")
     for r in cursor.fetchall():
         print(f" - {r[0]}")
+    
+    print("Unlocked Bosses:")
+    cursor.execute("SELECT name FROM unlockable_shop WHERE content_type = 'BOSS' AND is_unlocked = 1")
+    for r in cursor.fetchall():
+        print(f" - {r[0]}")
+
+    print("Unlocked Minigames:")
+    cursor.execute("SELECT name FROM unlockable_shop WHERE content_type = 'MINIGAME' AND is_unlocked = 1")
+    for r in cursor.fetchall():
+        print(f" - {r[0]}")
+
+    print("Unlocked Raids:")
+    cursor.execute("SELECT name FROM unlockable_shop WHERE content_type = 'RAID' AND is_unlocked = 1")
+    for r in cursor.fetchall():
+        print(f" - {r[0]}")
 
     cursor.execute("""
         SELECT skill_name, current_level, current_xp, is_unlocked
@@ -105,7 +120,8 @@ def main():
         elif choice == "4":
             progression.use_lamp(conn, cursor)
         elif choice == "9":
-            backup_manager.restore_from_log(conn, cursor)
+            log_file = Path(__file__).parent / "history.log"
+            backup_manager.restore_from_log(conn, cursor, log_file)
         elif choice == "5":
             progression.recalculate_all_virtual_stats(cursor)
             conn.commit()

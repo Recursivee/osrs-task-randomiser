@@ -6,3 +6,4 @@ __pycache__/
 # Ignore local database files
 *.db
 *.sqlite3
+*.log
