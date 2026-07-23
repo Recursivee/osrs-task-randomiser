@@ -32,25 +32,25 @@ Inspired by snowflake accounts and TadPie's gameplay mode "Adventurescape", this
 ## To use
 
 - 1: clone the repository:
-'''git clone [https://github.com/your-username/osrs-task-generator.git](https://github.com/your-username/osrs-task-generator.git)
-cd osrs-task-generator'''
+```git clone [https://github.com/your-username/osrs-task-generator.git](https://github.com/your-username/osrs-task-generator.git)
+cd osrs-task-generator```
 
 - 2: Create a virtual environment (recommended):
-'''python -m venv venv
+```python -m venv venv
 #on windows:
 venv\Scripts\activate
 #on linux/mac
-source venv/bin/activate'''
+source venv/bin/activate```
 
 - 3: Install dependencies
-'''pip install requirements.txt'''
+```pip install requirements.txt```
 
 - 4: Run database setup
-'''cd Scripts/
-python full_db_setup.py'''
+```cd Scripts/
+python full_db_setup.py```
 
 - 5: Run main app
-'''python app.py'''
+```python app.py```
 
 ---
 
